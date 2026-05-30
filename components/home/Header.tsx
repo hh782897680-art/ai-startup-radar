@@ -1,12 +1,18 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, Moon, Radar, Search, Sparkles } from "lucide-react";
 import { navItems } from "@/data/home";
 
 export function Header() {
+  const pathname = usePathname();
+
   return (
     <header className="sticky top-0 z-50 border-b border-indigo-100/85 bg-white/82 backdrop-blur-xl">
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
         <div className="flex h-[72px] items-center gap-2">
-          <a href="#" className="mr-2 flex min-w-[210px] items-center gap-3">
+          <Link href="/" className="mr-2 flex min-w-[210px] items-center gap-3">
             <span className="relative inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 text-white shadow-[0_12px_30px_rgba(79,70,229,0.28)]">
               <Radar className="h-5 w-5" />
               <Sparkles className="absolute -right-1 -top-1 h-3.5 w-3.5 rounded-full bg-white p-0.5 text-indigo-600" />
@@ -19,22 +25,29 @@ export function Header() {
                 发现 · 分析 · 启动你的AI项目
               </span>
             </span>
-          </a>
+          </Link>
 
           <nav className="hidden min-w-0 flex-1 items-center justify-center gap-1.5 xl:flex">
-            {navItems.map((item) => (
-              <button
-                key={item}
-                type="button"
-                className={`rounded-full px-3 py-1.5 text-sm transition ${
-                  item === "首页"
-                    ? "bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-[0_10px_25px_rgba(79,70,229,0.28)]"
-                    : "text-slate-600 hover:bg-indigo-50 hover:text-indigo-700"
-                }`}
-              >
-                {item}
-              </button>
-            ))}
+            {navItems.map((item) => {
+              const isActive =
+                item.href === "/"
+                  ? pathname === "/"
+                  : item.href !== "#" && pathname.startsWith(item.href);
+
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className={`rounded-full px-3 py-1.5 text-sm transition ${
+                    isActive
+                      ? "bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-[0_10px_25px_rgba(79,70,229,0.28)]"
+                      : "text-slate-600 hover:bg-indigo-50 hover:text-indigo-700"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
           </nav>
 
           <div className="ml-auto flex items-center gap-2">
@@ -79,19 +92,26 @@ export function Header() {
         </div>
 
         <nav className="flex gap-2 overflow-x-auto pb-3 xl:hidden">
-          {navItems.map((item) => (
-            <button
-              key={`mobile-${item}`}
-              type="button"
-              className={`shrink-0 rounded-full border px-3 py-1.5 text-xs transition ${
-                item === "首页"
-                  ? "border-transparent bg-gradient-to-r from-indigo-600 to-violet-600 text-white"
-                  : "border-indigo-100 bg-white text-slate-600"
-              }`}
-            >
-              {item}
-            </button>
-          ))}
+          {navItems.map((item) => {
+            const isActive =
+              item.href === "/"
+                ? pathname === "/"
+                : item.href !== "#" && pathname.startsWith(item.href);
+
+            return (
+              <Link
+                key={`mobile-${item.label}`}
+                href={item.href}
+                className={`shrink-0 rounded-full border px-3 py-1.5 text-xs transition ${
+                  isActive
+                    ? "border-transparent bg-gradient-to-r from-indigo-600 to-violet-600 text-white"
+                    : "border-indigo-100 bg-white text-slate-600"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
       </div>
     </header>

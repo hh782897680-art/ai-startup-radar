@@ -1,4 +1,5 @@
 import { ArrowRight, Dot, Radar, Sparkles, Star, Users } from "lucide-react";
+import Link from "next/link";
 import { heroPreviewProjects, heroStats, heroTags } from "@/data/home";
 
 const statIcons = {
@@ -37,13 +38,13 @@ export function HeroSection() {
           </p>
 
           <div className="mt-6 flex flex-wrap gap-3">
-            <button
-              type="button"
+            <Link
+              href="/github-analyzer"
               className="btn-primary inline-flex h-11 items-center gap-2 rounded-full px-6 text-sm font-semibold text-white"
             >
               开始分析项目
               <ArrowRight className="h-4 w-4" />
-            </button>
+            </Link>
             <button
               type="button"
               className="inline-flex h-11 items-center rounded-full border border-indigo-200 bg-white px-6 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-50"

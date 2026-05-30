@@ -1,12 +1,12 @@
 export const navItems = [
-  "首页",
-  "AI项目库",
-  "GitHub分析器",
-  "创业灵感",
-  "建站方案",
-  "推广文案",
-  "AI工具",
-  "排行榜",
+  { label: "首页", href: "/" },
+  { label: "AI项目库", href: "#" },
+  { label: "GitHub分析器", href: "/github-analyzer" },
+  { label: "创业灵感", href: "#" },
+  { label: "建站方案", href: "#" },
+  { label: "推广文案", href: "#" },
+  { label: "AI工具", href: "#" },
+  { label: "排行榜", href: "#" },
 ];
 
 export const heroStats = [
@@ -38,6 +38,7 @@ export const featureCards = [
     button: "立即分析",
     icon: "Radar",
     iconBg: "from-indigo-500 to-violet-500",
+    href: "/github-analyzer",
   },
   {
     title: "AI创业灵感生成器",

@@ -1,4 +1,5 @@
 import { ArrowUpRight, LayoutGrid, Radar, Rocket, Sparkles } from "lucide-react";
+import Link from "next/link";
 import { featureCards } from "@/data/home";
 
 const iconMap = {
@@ -33,23 +34,51 @@ export function FeatureCards() {
                 >
                   <Icon className="h-5 w-5" />
                 </span>
-                <h3 className="text-lg font-semibold text-slate-900">{card.title}</h3>
+                <h3 className="text-lg font-semibold text-slate-900">
+                  {card.href ? (
+                    <Link href={card.href} className="hover:text-indigo-700">
+                      {card.title}
+                    </Link>
+                  ) : (
+                    card.title
+                  )}
+                </h3>
                 <p className="mt-2 text-sm leading-6 text-slate-600">{card.description}</p>
 
                 <div className="mt-5 flex items-center justify-between">
-                  <button
-                    type="button"
-                    className="rounded-full border border-indigo-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-indigo-700 transition hover:bg-indigo-50"
-                  >
-                    {card.button}
-                  </button>
-                  <button
-                    type="button"
-                    aria-label={`${card.title} 操作`}
-                    className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-indigo-200 bg-white text-indigo-700 transition group-hover:-translate-y-0.5"
-                  >
-                    <ArrowUpRight className="h-4 w-4" />
-                  </button>
+                  {card.href ? (
+                    <>
+                      <Link
+                        href={card.href}
+                        className="rounded-full border border-indigo-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-indigo-700 transition hover:bg-indigo-50"
+                      >
+                        {card.button}
+                      </Link>
+                      <Link
+                        href={card.href}
+                        aria-label={`${card.title} 操作`}
+                        className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-indigo-200 bg-white text-indigo-700 transition group-hover:-translate-y-0.5"
+                      >
+                        <ArrowUpRight className="h-4 w-4" />
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        type="button"
+                        className="rounded-full border border-indigo-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-indigo-700 transition hover:bg-indigo-50"
+                      >
+                        {card.button}
+                      </button>
+                      <button
+                        type="button"
+                        aria-label={`${card.title} 操作`}
+                        className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-indigo-200 bg-white text-indigo-700 transition group-hover:-translate-y-0.5"
+                      >
+                        <ArrowUpRight className="h-4 w-4" />
+                      </button>
+                    </>
+                  )}
                 </div>
               </article>
             );
