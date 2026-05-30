@@ -3,10 +3,10 @@ import { navItems } from "@/data/home";
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/78 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-slate-200/85 bg-white/82 backdrop-blur-xl">
       <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
-        <div className="flex h-[72px] items-center gap-3">
-          <a href="#" className="mr-2 flex min-w-[200px] items-center gap-3">
+        <div className="flex h-[72px] items-center gap-2">
+          <a href="#" className="mr-2 flex min-w-[190px] items-center gap-3">
             <span className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-600 via-violet-500 to-blue-500 text-white shadow-lg shadow-indigo-200">
               <Radar className="h-5 w-5" />
               <Sparkles className="absolute -right-1 -top-1 h-3.5 w-3.5 rounded-full bg-white p-0.5 text-indigo-500" />
@@ -21,7 +21,7 @@ export function Header() {
             </span>
           </a>
 
-          <nav className="hidden min-w-0 flex-1 items-center justify-center gap-1 xl:flex">
+          <nav className="hidden min-w-0 flex-1 items-center justify-center gap-1.5 2xl:flex">
             {navItems.map((item) => (
               <button
                 key={item}
@@ -38,13 +38,16 @@ export function Header() {
           </nav>
 
           <div className="ml-auto flex items-center gap-2">
-            <label className="relative hidden w-72 lg:block">
-              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+            <label className="relative hidden w-[21rem] xl:block">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-indigo-400" />
               <input
                 type="text"
                 placeholder="搜索项目、工具、文章…"
-                className="h-10 w-full rounded-full border border-slate-200 bg-white/95 px-9 text-sm outline-none transition focus:border-indigo-400 focus:shadow-[0_0_0_4px_rgba(99,102,241,0.12)]"
+                className="h-10 w-full rounded-full border border-indigo-200 bg-white px-9 pr-11 text-sm outline-none ring-4 ring-indigo-50/65 transition focus:border-indigo-400 focus:ring-indigo-100"
               />
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-medium uppercase tracking-wide text-slate-400">
+                UI
+              </span>
             </label>
 
             <button
@@ -57,7 +60,7 @@ export function Header() {
 
             <button
               type="button"
-              className="hidden h-10 rounded-full border border-indigo-200 bg-white px-4 text-sm font-medium text-indigo-700 transition hover:bg-indigo-50 sm:inline-flex sm:items-center"
+              className="hidden h-10 items-center rounded-full border border-indigo-200 bg-white px-4 text-sm font-medium text-indigo-700 transition hover:bg-indigo-50 md:inline-flex"
             >
               登录
             </button>
@@ -70,7 +73,7 @@ export function Header() {
 
             <button
               type="button"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 xl:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 2xl:hidden"
               aria-label="打开菜单"
             >
               <Menu className="h-5 w-5" />
@@ -78,7 +81,7 @@ export function Header() {
           </div>
         </div>
 
-        <nav className="flex gap-2 overflow-x-auto pb-3 xl:hidden">
+        <nav className="flex gap-2 overflow-x-auto pb-3 2xl:hidden">
           {navItems.map((item) => (
             <button
               key={`mobile-${item}`}

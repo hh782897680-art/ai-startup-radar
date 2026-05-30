@@ -12,7 +12,10 @@ export function ResourcesSection() {
   return (
     <section className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
       <div className="mb-3 flex items-center justify-between gap-3">
-        <h2 className="font-mono text-2xl text-slate-900">创业资源</h2>
+        <div>
+          <h2 className="font-mono text-2xl text-slate-900">创业资源</h2>
+          <p className="text-sm text-slate-500">从变现到发布的关键资源，一次性打包</p>
+        </div>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">

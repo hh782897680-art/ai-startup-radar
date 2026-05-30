@@ -6,6 +6,7 @@ export function ArticlesSection() {
     <section className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
       <div className="mb-3">
         <h2 className="font-mono text-2xl text-slate-900">最新项目解读</h2>
+        <p className="text-sm text-slate-500">每周追踪值得深挖的 AI 项目与商业化路径</p>
       </div>
 
       <div className="grid gap-4">

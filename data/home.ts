@@ -7,6 +7,8 @@ export const navItems = [
   "推广文案",
   "AI工具",
   "排行榜",
+  "资源",
+  "关于我们",
 ];
 
 export const heroTags = ["项目发现", "商业分析", "AI建站方案"];
@@ -26,9 +28,9 @@ export const heroPreviewMetrics = [
 ];
 
 export const heroPreviewProjects = [
-  { name: "Open WebUI", score: "9.6", heat: "1.6k" },
-  { name: "Dify", score: "9.3", heat: "1.4k" },
-  { name: "RAGFlow", score: "8.9", heat: "1.1k" },
+  { name: "Open WebUI", score: "9.3", heat: "热度 1.6k" },
+  { name: "Dify", score: "9.1", heat: "热度 1.4k" },
+  { name: "RAGFlow", score: "8.7", heat: "热度 1.1k" },
 ];
 
 export const featureCards = [
@@ -105,12 +107,7 @@ export const opportunities = [
   },
 ];
 
-export const analyzerTags = [
-  "vercel/ai",
-  "langchain-ai/langchain",
-  "microsoft/autogen",
-  "mem0ai/mem0",
-];
+export const analyzerTags = ["vercel/ai", "langchain", "autogen", "mem0"];
 
 export const analyzerMetrics = [
   { label: "商业化潜力", value: "9.2/10", level: "高" },
@@ -132,56 +129,56 @@ export const rankingItems = [
 export const hotProjects = [
   {
     name: "Auto-GPT",
-    description: "自主运行的AI Agent",
+    summary: "自主运行的AI Agent",
     category: "AI Agent",
     rating: "8.4",
     stars: "12.3k",
-    badge: "适合研究",
+    beginner: "一般",
     short: "A",
   },
   {
     name: "BabyAGI",
-    description: "任务驱动AI Agent",
+    summary: "任务驱动AI Agent",
     category: "AI Agent",
     rating: "8.1",
     stars: "9.8k",
-    badge: "适合小白",
+    beginner: "友好",
     short: "B",
   },
   {
     name: "Open WebUI",
-    description: "开源AI聊天界面",
+    summary: "开源AI聊天界面",
     category: "AI应用",
     rating: "8.7",
     stars: "8.7k",
-    badge: "适合部署",
+    beginner: "友好",
     short: "O",
   },
   {
     name: "Flowise",
-    description: "可视化AI Agent构建器",
+    summary: "可视化AI Agent构建器",
     category: "开发工具",
     rating: "8.6",
     stars: "6.2k",
-    badge: "适合二开",
+    beginner: "友好",
     short: "F",
   },
   {
     name: "AnythingLLM",
-    description: "本地知识库问答系统",
+    summary: "本地知识库问答系统",
     category: "知识库",
     rating: "8.5",
     stars: "5.9k",
-    badge: "适合企业",
+    beginner: "一般",
     short: "A",
   },
   {
     name: "Stable Diffusion",
-    description: "开源AI绘画工具",
+    summary: "开源AI绘画工具",
     category: "图像生成",
     rating: "8.8",
     stars: "15.2k",
-    badge: "适合内容创作",
+    beginner: "进阶",
     short: "S",
   },
 ];
@@ -189,50 +186,74 @@ export const hotProjects = [
 export const tools = [
   {
     name: "ChatGPT",
-    description: "AI对话助手",
-    tags: ["需魔法", "支持中文", "付费"],
+    type: "AI对话助手",
+    availability: "需魔法",
+    chinese: "支持中文",
+    pricing: "付费",
+    scenario: "内容创作 / 研究分析",
     short: "C",
   },
   {
     name: "Claude",
-    description: "长文本AI助手",
-    tags: ["需魔法", "支持中文", "付费"],
+    type: "长文本AI助手",
+    availability: "需魔法",
+    chinese: "支持中文",
+    pricing: "付费",
+    scenario: "文档总结 / 写作辅助",
     short: "C",
   },
   {
     name: "Gemini",
-    description: "Google AI助手",
-    tags: ["需魔法", "支持中文", "免费"],
+    type: "Google AI助手",
+    availability: "需魔法",
+    chinese: "支持中文",
+    pricing: "免费",
+    scenario: "多模态问答",
     short: "G",
   },
   {
     name: "Cursor",
-    description: "AI编程工具",
-    tags: ["需魔法", "支持中文", "付费"],
+    type: "AI编程工具",
+    availability: "需魔法",
+    chinese: "支持中文",
+    pricing: "付费",
+    scenario: "代码生成 / 重构",
     short: "C",
   },
   {
     name: "Perplexity",
-    description: "AI搜索工具",
-    tags: ["需魔法", "支持中文", "免费"],
+    type: "AI搜索工具",
+    availability: "需魔法",
+    chinese: "支持中文",
+    pricing: "免费",
+    scenario: "资料检索 / 事实核查",
     short: "P",
   },
   {
     name: "Notion AI",
-    description: "AI办公助手",
-    tags: ["需魔法", "支持中文", "付费"],
+    type: "AI办公助手",
+    availability: "需魔法",
+    chinese: "支持中文",
+    pricing: "付费",
+    scenario: "团队文档 / 项目协作",
     short: "N",
   },
   {
     name: "Kimi",
-    description: "长文本AI助手",
-    tags: ["国内可用", "支持中文", "免费"],
+    type: "长文本AI助手",
+    availability: "国内可用",
+    chinese: "支持中文",
+    pricing: "免费",
+    scenario: "长文阅读 / 报告总结",
     short: "K",
   },
   {
     name: "豆包",
-    description: "中文AI助手",
-    tags: ["国内可用", "支持中文", "免费"],
+    type: "中文AI助手",
+    availability: "国内可用",
+    chinese: "支持中文",
+    pricing: "免费",
+    scenario: "日常问答 / 创意辅助",
     short: "豆",
   },
 ];
@@ -287,19 +308,19 @@ export const resources = [
 export const testimonials = [
   {
     name: "张同学",
-    text: "通过项目分析器，我找到了一个月入3万的AI项目方向。",
+    text: "通过项目分析器，我找到了更清晰的AI项目方向。",
   },
   {
     name: "李同学",
-    text: "建站方案生成器帮我节省了80%的产品规划时间。",
+    text: "建站方案生成器帮我节省了大量产品规划时间。",
   },
   {
     name: "王同学",
-    text: "推广文案生成器让我的内容创作效率提升了5倍。",
+    text: "推广文案生成器让我的内容创作效率提升很多。",
   },
   {
     name: "陈同学",
-    text: "每天来这里找灵感，已经启动了3个AI项目。",
+    text: "每天来这里找灵感，已经启动了多个AI项目。",
   },
 ];
 

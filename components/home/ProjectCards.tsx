@@ -1,4 +1,4 @@
-import { Bookmark, ChevronRight, Star } from "lucide-react";
+import { Bookmark, ChevronRight, CircleCheckBig, Star, TrendingUp } from "lucide-react";
 import { hotProjects } from "@/data/home";
 
 export function ProjectCards() {
@@ -22,11 +22,11 @@ export function ProjectCards() {
         {hotProjects.map((project) => (
           <article
             key={project.name}
-            className="group flex h-full flex-col rounded-3xl border border-indigo-100 bg-white/92 p-5 shadow-[0_18px_45px_-35px_rgba(79,70,229,0.58)] transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_30px_65px_-36px_rgba(79,70,229,0.75)]"
+            className="group flex h-full flex-col rounded-3xl border border-indigo-100 bg-white/92 p-5 shadow-[0_18px_52px_-34px_rgba(79,70,229,0.66)] transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_34px_70px_-36px_rgba(79,70,229,0.84)]"
           >
             <div className="flex items-start justify-between gap-3">
               <div className="flex items-center gap-3">
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-blue-500 text-sm font-semibold text-white">
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-blue-500 text-sm font-semibold text-white shadow-md shadow-indigo-200">
                   {project.short}
                 </span>
                 <div>
@@ -46,7 +46,7 @@ export function ProjectCards() {
               </button>
             </div>
 
-            <p className="mt-4 text-sm leading-6 text-slate-600">{project.description}</p>
+            <p className="mt-4 text-sm leading-6 text-slate-600">{project.summary}</p>
 
             <div className="mt-4 grid grid-cols-3 gap-2 text-xs">
               <div className="rounded-xl border border-indigo-100 bg-indigo-50/45 px-2.5 py-2">
@@ -54,16 +54,27 @@ export function ProjectCards() {
                 <p className="mt-1 font-semibold text-slate-900">{project.rating}</p>
               </div>
               <div className="rounded-xl border border-indigo-100 bg-indigo-50/45 px-2.5 py-2">
-                <p className="text-slate-500">Star</p>
+                <p className="text-slate-500">Stars</p>
                 <p className="mt-1 font-semibold text-slate-900">{project.stars}</p>
               </div>
               <div className="rounded-xl border border-indigo-100 bg-indigo-50/45 px-2.5 py-2">
-                <p className="text-slate-500">标签</p>
-                <p className="mt-1 font-semibold text-slate-900">{project.badge}</p>
+                <p className="text-slate-500">小白友好</p>
+                <p className="mt-1 font-semibold text-slate-900">{project.beginner}</p>
               </div>
             </div>
 
-            <div className="mt-4 inline-flex items-center gap-1 text-xs text-slate-500">
+            <div className="mt-4 flex items-center justify-between text-xs text-slate-500">
+              <span className="inline-flex items-center gap-1">
+                <TrendingUp className="h-3.5 w-3.5 text-indigo-500" />
+                创业热度持续上升
+              </span>
+              <span className="inline-flex items-center gap-1">
+                <CircleCheckBig className="h-3.5 w-3.5 text-cyan-500" />
+                可持续关注
+              </span>
+            </div>
+
+            <div className="mt-3 inline-flex items-center gap-1 text-xs text-slate-500">
               <Star className="h-3.5 w-3.5 text-indigo-500" />
               AI 创业方向参考
             </div>

@@ -145,101 +145,107 @@ export function WorkspaceSection() {
           </button>
         </aside>
 
-        <section className="relative rounded-[24px] border border-indigo-200 bg-gradient-to-br from-white via-indigo-50/40 to-blue-50/50 p-5 shadow-[0_26px_68px_-38px_rgba(79,70,229,0.78)] sm:p-6">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <h2 className="font-mono text-2xl text-slate-900">GitHub项目分析器</h2>
-              <p className="text-sm text-slate-600">输入GitHub链接，AI帮你深度分析项目价值</p>
-            </div>
-            <span className="inline-flex items-center gap-1 rounded-full border border-indigo-200 bg-white px-3 py-1 text-xs text-indigo-700">
-              <Sparkles className="h-3.5 w-3.5" />
-              首页核心模块
-            </span>
-          </div>
-
-          <div className="mt-4 flex flex-col gap-2 sm:flex-row">
-            <label className="relative flex-1">
-              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-              <input
-                value={repoUrl}
-                onChange={(event) => setRepoUrl(event.target.value)}
-                placeholder="https://github.com/owner/repo"
-                className="h-11 w-full rounded-xl border border-indigo-200 bg-white px-10 text-sm text-slate-700 outline-none transition focus:border-indigo-400"
-              />
-            </label>
-            <button
-              type="button"
-              onClick={handleAnalyze}
-              className="btn-primary h-11 rounded-xl px-5 text-sm font-semibold text-white"
-            >
-              {loading ? "分析中..." : "开始分析"}
-            </button>
-          </div>
-          {error ? <p className="mt-2 text-xs text-rose-600">{error}</p> : null}
-
-          <div className="mt-3 flex flex-wrap gap-2">
-            {analyzerTags.map((tag) => (
-              <button
-                key={tag}
-                type="button"
-                onClick={() => setRepoUrl(`https://github.com/${tag}`)}
-                className="rounded-full border border-indigo-200 bg-white px-3 py-1 text-xs text-slate-600 transition hover:border-indigo-300 hover:text-indigo-700"
-              >
-                {tag}
-              </button>
-            ))}
-          </div>
-
-          <div className="relative mt-5 rounded-2xl border border-indigo-100 bg-white/94 p-4">
-            {loading ? (
-              <div className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl bg-white/78 backdrop-blur-sm">
-                <span className="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-white px-3 py-1 text-sm text-indigo-700">
-                  <Zap className="h-4 w-4" />
-                  AI 正在分析项目...
-                </span>
-              </div>
-            ) : null}
-
-            <div className="mb-3 flex flex-wrap items-center justify-between gap-3 border-b border-indigo-100 pb-3">
+        <section className="rounded-[24px] bg-gradient-to-r from-indigo-500 via-violet-500 to-blue-500 p-[1.2px] shadow-[0_30px_76px_-35px_rgba(79,70,229,0.88)]">
+          <div className="relative rounded-[23px] bg-gradient-to-br from-white via-indigo-50/45 to-blue-50/45 p-5 sm:p-6">
+            <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
-                <p className="text-xs text-slate-500">项目</p>
-                <p className="text-lg font-semibold text-slate-900">{projectName}</p>
+                <h2 className="font-mono text-2xl text-slate-900">GitHub项目分析器</h2>
+                <p className="text-sm text-slate-600">
+                  输入GitHub链接，AI帮你判断项目商业化潜力
+                </p>
               </div>
-              <div className="text-right">
-                <p className="text-3xl font-semibold leading-none text-slate-900">8.9</p>
-                <p className="text-xs text-slate-500">综合评分</p>
-              </div>
+              <span className="inline-flex items-center gap-1 rounded-full border border-indigo-200 bg-white px-3 py-1 text-xs text-indigo-700">
+                <Sparkles className="h-3.5 w-3.5" />
+                首页核心工具
+              </span>
             </div>
 
-            <div className="grid gap-2.5 sm:grid-cols-2">
-              {analyzerMetrics.map((metric) => (
-                <div
-                  key={metric.label}
-                  className="rounded-xl border border-indigo-100 bg-indigo-50/45 px-3 py-2"
+            <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+              <label className="relative flex-1">
+                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                <input
+                  value={repoUrl}
+                  onChange={(event) => setRepoUrl(event.target.value)}
+                  placeholder="https://github.com/owner/repo"
+                  className="h-11 w-full rounded-xl border border-indigo-200 bg-white px-10 text-sm text-slate-700 outline-none transition focus:border-indigo-400"
+                />
+              </label>
+              <button
+                type="button"
+                onClick={handleAnalyze}
+                className="btn-primary h-11 rounded-xl px-5 text-sm font-semibold text-white"
+              >
+                {loading ? "分析中..." : "开始分析"}
+              </button>
+            </div>
+            {error ? <p className="mt-2 text-xs text-rose-600">{error}</p> : null}
+
+            <div className="mt-3 flex flex-wrap gap-2">
+              {analyzerTags.map((tag) => (
+                <button
+                  key={tag}
+                  type="button"
+                  onClick={() => setRepoUrl(`https://github.com/${tag}`)}
+                  className="rounded-full border border-indigo-200 bg-white px-3 py-1 text-xs text-slate-600 transition hover:border-indigo-300 hover:text-indigo-700"
                 >
-                  <p className="text-xs text-slate-500">{metric.label}</p>
-                  <p className="mt-1 text-sm font-semibold text-slate-900">{metric.value}</p>
-                  <p className="mt-0.5 text-xs text-indigo-700">{metric.level}</p>
-                </div>
+                  {tag}
+                </button>
               ))}
             </div>
 
-            <div className="mt-4 flex flex-wrap gap-2">
-              <button
-                type="button"
-                className="inline-flex items-center gap-1 rounded-xl border border-indigo-200 bg-white px-3 py-1.5 text-xs font-semibold text-indigo-700 transition hover:bg-indigo-50"
-              >
-                <FileText className="h-3.5 w-3.5" />
-                查看完整分析报告
-              </button>
-              <button
-                type="button"
-                onClick={handleCopy}
-                className="inline-flex items-center gap-1 rounded-xl border border-indigo-200 bg-white px-3 py-1.5 text-xs font-semibold text-indigo-700 transition hover:bg-indigo-50"
-              >
-                <Copy className="h-3.5 w-3.5" />
-                {copied ? "已复制" : "复制分析结果"}
-              </button>
+            <div className="relative mt-5 rounded-2xl border border-indigo-100 bg-white/95 p-4 shadow-[inset_0_0_0_1px_rgba(224,231,255,0.6)]">
+              {loading ? (
+                <div className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl bg-white/78 backdrop-blur-sm">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-white px-3 py-1 text-sm text-indigo-700">
+                    <Zap className="h-4 w-4" />
+                    AI 正在分析项目...
+                  </span>
+                </div>
+              ) : null}
+
+              <div className="mb-3 flex flex-wrap items-center justify-between gap-3 border-b border-indigo-100 pb-3">
+                <div>
+                  <p className="text-xs text-slate-500">项目</p>
+                  <p className="text-lg font-semibold text-slate-900">{projectName}</p>
+                </div>
+                <div className="text-right">
+                  <p className="bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-4xl font-semibold leading-none text-transparent">
+                    8.9
+                  </p>
+                  <p className="text-xs text-slate-500">综合评分</p>
+                </div>
+              </div>
+
+              <div className="grid gap-2.5 sm:grid-cols-2">
+                {analyzerMetrics.map((metric) => (
+                  <div
+                    key={metric.label}
+                    className="rounded-xl border border-indigo-100 bg-indigo-50/45 px-3 py-2"
+                  >
+                    <p className="text-xs text-slate-500">{metric.label}</p>
+                    <p className="mt-1 text-sm font-semibold text-slate-900">{metric.value}</p>
+                    <p className="mt-0.5 text-xs text-indigo-700">{metric.level}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-4 flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  className="inline-flex items-center gap-1 rounded-xl border border-indigo-200 bg-white px-3 py-1.5 text-xs font-semibold text-indigo-700 transition hover:bg-indigo-50"
+                >
+                  <FileText className="h-3.5 w-3.5" />
+                  查看完整分析报告
+                </button>
+                <button
+                  type="button"
+                  onClick={handleCopy}
+                  className="inline-flex items-center gap-1 rounded-xl border border-indigo-200 bg-white px-3 py-1.5 text-xs font-semibold text-indigo-700 transition hover:bg-indigo-50"
+                >
+                  <Copy className="h-3.5 w-3.5" />
+                  {copied ? "已复制" : "复制分析结果"}
+                </button>
+              </div>
             </div>
           </div>
         </section>
@@ -270,7 +276,9 @@ export function WorkspaceSection() {
                   key={item.name}
                   className="flex items-center justify-between rounded-xl border border-indigo-100 bg-indigo-50/45 px-3 py-2"
                 >
-                  <span className="text-sm text-slate-600">{index + 1}. {item.name}</span>
+                  <span className="text-sm text-slate-600">
+                    {index + 1}. {item.name}
+                  </span>
                   <span className="text-sm font-semibold text-indigo-700">{item.score}</span>
                 </li>
               ))}

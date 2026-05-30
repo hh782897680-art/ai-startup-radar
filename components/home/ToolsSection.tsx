@@ -1,4 +1,4 @@
-import { ShieldCheck } from "lucide-react";
+import { Globe, Languages, ShieldCheck, Wallet } from "lucide-react";
 import { tools } from "@/data/home";
 
 export function ToolsSection() {
@@ -13,7 +13,7 @@ export function ToolsSection() {
         {tools.map((tool) => (
           <article
             key={tool.name}
-            className="rounded-3xl border border-indigo-100 bg-white/92 p-5 shadow-[0_16px_42px_-34px_rgba(79,70,229,0.58)] transition hover:-translate-y-1"
+            className="rounded-3xl border border-indigo-100 bg-white/92 p-5 shadow-[0_18px_50px_-35px_rgba(79,70,229,0.66)] transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_30px_64px_-36px_rgba(79,70,229,0.82)]"
           >
             <div className="flex items-center gap-3">
               <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-blue-500 text-sm font-semibold text-white">
@@ -21,24 +21,49 @@ export function ToolsSection() {
               </span>
               <div>
                 <p className="font-semibold text-slate-900">{tool.name}</p>
-                <p className="text-xs text-slate-500">{tool.description}</p>
+                <p className="text-xs text-slate-500">{tool.type}</p>
+              </div>
+            </div>
+
+            <div className="mt-4 grid gap-2 text-xs">
+              <div className="flex items-center justify-between rounded-xl border border-indigo-100 bg-indigo-50/45 px-2.5 py-2">
+                <span className="inline-flex items-center gap-1 text-slate-500">
+                  <Globe className="h-3.5 w-3.5 text-indigo-500" />
+                  可用状态
+                </span>
+                <span className="font-semibold text-slate-800">{tool.availability}</span>
+              </div>
+              <div className="flex items-center justify-between rounded-xl border border-indigo-100 bg-indigo-50/45 px-2.5 py-2">
+                <span className="inline-flex items-center gap-1 text-slate-500">
+                  <Languages className="h-3.5 w-3.5 text-indigo-500" />
+                  中文支持
+                </span>
+                <span className="font-semibold text-slate-800">{tool.chinese}</span>
+              </div>
+              <div className="flex items-center justify-between rounded-xl border border-indigo-100 bg-indigo-50/45 px-2.5 py-2">
+                <span className="inline-flex items-center gap-1 text-slate-500">
+                  <Wallet className="h-3.5 w-3.5 text-indigo-500" />
+                  费用模式
+                </span>
+                <span className="font-semibold text-slate-800">{tool.pricing}</span>
               </div>
             </div>
 
             <div className="mt-4 flex flex-wrap gap-2">
-              {tool.tags.map((tag) => (
-                <span
-                  key={`${tool.name}-${tag}`}
-                  className="rounded-full border border-indigo-100 bg-indigo-50 px-2.5 py-1 text-xs text-slate-600"
-                >
-                  {tag}
-                </span>
-              ))}
+              <span className="rounded-full border border-indigo-100 bg-indigo-50 px-2.5 py-1 text-xs text-slate-600">
+                {tool.availability}
+              </span>
+              <span className="rounded-full border border-indigo-100 bg-indigo-50 px-2.5 py-1 text-xs text-slate-600">
+                {tool.chinese}
+              </span>
+              <span className="rounded-full border border-indigo-100 bg-indigo-50 px-2.5 py-1 text-xs text-slate-600">
+                {tool.pricing}
+              </span>
             </div>
 
             <p className="mt-4 inline-flex items-center gap-1 text-xs text-slate-500">
               <ShieldCheck className="h-3.5 w-3.5 text-indigo-500" />
-              工具信息展示（UI）
+              适合场景：{tool.scenario}
             </p>
           </article>
         ))}
