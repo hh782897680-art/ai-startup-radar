@@ -97,9 +97,9 @@ export function WorkspaceSection() {
   }
 
   return (
-    <section className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
-      <div className="grid gap-4 xl:grid-cols-[25%_50%_25%]">
-        <aside className="glass-card p-4">
+    <section className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-12">
+        <aside className="dashboard-card p-5 xl:col-span-3">
           <h2 className="font-mono text-lg text-slate-900">今日AI机会</h2>
           <p className="text-xs text-slate-500">每日更新值得关注的AI项目</p>
 
@@ -145,18 +145,18 @@ export function WorkspaceSection() {
           </button>
         </aside>
 
-        <section className="rounded-[24px] bg-gradient-to-r from-indigo-500 via-violet-500 to-blue-500 p-[1.2px] shadow-[0_30px_76px_-35px_rgba(79,70,229,0.88)]">
-          <div className="relative rounded-[23px] bg-gradient-to-br from-white via-indigo-50/45 to-blue-50/45 p-5 sm:p-6">
+        <section className="rounded-3xl bg-gradient-to-r from-indigo-600 to-violet-600 p-[1.2px] shadow-[0_20px_60px_rgba(79,70,229,0.2)] xl:col-span-6">
+          <div className="relative rounded-3xl bg-gradient-to-br from-white via-indigo-50/55 to-violet-50/35 p-5 sm:p-6">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
-                <h2 className="font-mono text-2xl text-slate-900">GitHub项目分析器</h2>
+                <h2 className="font-mono text-3xl leading-tight text-slate-900">GitHub项目分析器</h2>
                 <p className="text-sm text-slate-600">
                   输入GitHub链接，AI帮你判断项目商业化潜力
                 </p>
               </div>
               <span className="inline-flex items-center gap-1 rounded-full border border-indigo-200 bg-white px-3 py-1 text-xs text-indigo-700">
                 <Sparkles className="h-3.5 w-3.5" />
-                首页核心工具
+                核心工具面板
               </span>
             </div>
 
@@ -193,9 +193,9 @@ export function WorkspaceSection() {
               ))}
             </div>
 
-            <div className="relative mt-5 rounded-2xl border border-indigo-100 bg-white/95 p-4 shadow-[inset_0_0_0_1px_rgba(224,231,255,0.6)]">
+            <div className="relative mt-5 rounded-3xl border border-indigo-100 bg-white/95 p-4 shadow-[0_20px_60px_rgba(79,70,229,0.12)]">
               {loading ? (
-                <div className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl bg-white/78 backdrop-blur-sm">
+                <div className="absolute inset-0 z-10 flex items-center justify-center rounded-3xl bg-white/80 backdrop-blur-sm">
                   <span className="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-white px-3 py-1 text-sm text-indigo-700">
                     <Zap className="h-4 w-4" />
                     AI 正在分析项目...
@@ -203,13 +203,13 @@ export function WorkspaceSection() {
                 </div>
               ) : null}
 
-              <div className="mb-3 flex flex-wrap items-center justify-between gap-3 border-b border-indigo-100 pb-3">
+              <div className="mb-4 flex flex-wrap items-center justify-between gap-3 border-b border-indigo-100 pb-3">
                 <div>
                   <p className="text-xs text-slate-500">项目</p>
                   <p className="text-lg font-semibold text-slate-900">{projectName}</p>
                 </div>
                 <div className="text-right">
-                  <p className="bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-4xl font-semibold leading-none text-transparent">
+                  <p className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-5xl font-semibold leading-none text-transparent">
                     8.9
                   </p>
                   <p className="text-xs text-slate-500">综合评分</p>
@@ -220,7 +220,7 @@ export function WorkspaceSection() {
                 {analyzerMetrics.map((metric) => (
                   <div
                     key={metric.label}
-                    className="rounded-xl border border-indigo-100 bg-indigo-50/45 px-3 py-2"
+                    className="rounded-xl border border-indigo-100 bg-indigo-50/55 px-3 py-2.5"
                   >
                     <p className="text-xs text-slate-500">{metric.label}</p>
                     <p className="mt-1 text-sm font-semibold text-slate-900">{metric.value}</p>
@@ -250,8 +250,8 @@ export function WorkspaceSection() {
           </div>
         </section>
 
-        <div className="grid gap-4">
-          <aside className="glass-card p-4">
+        <div className="grid gap-4 xl:col-span-3">
+          <aside className="dashboard-card p-4">
             <h3 className="font-mono text-lg text-slate-900">项目排行榜</h3>
             <div className="mt-3 flex gap-2 overflow-x-auto">
               {rankingTabs.map((tab) => (
@@ -261,7 +261,7 @@ export function WorkspaceSection() {
                   onClick={() => setSelectedTab(tab as RankMode)}
                   className={`shrink-0 rounded-full px-3 py-1 text-xs transition ${
                     tab === selectedTab
-                      ? "bg-gradient-to-r from-indigo-600 to-blue-600 text-white"
+                      ? "bg-gradient-to-r from-indigo-600 to-violet-600 text-white"
                       : "border border-indigo-200 bg-white text-slate-600"
                   }`}
                 >
@@ -274,9 +274,9 @@ export function WorkspaceSection() {
               {rankingData.map((item, index) => (
                 <li
                   key={item.name}
-                  className="flex items-center justify-between rounded-xl border border-indigo-100 bg-indigo-50/45 px-3 py-2"
+                  className="flex items-center justify-between rounded-xl border border-indigo-100 bg-indigo-50/50 px-3 py-2"
                 >
-                  <span className="text-sm text-slate-600">
+                  <span className="text-sm text-slate-700">
                     {index + 1}. {item.name}
                   </span>
                   <span className="text-sm font-semibold text-indigo-700">{item.score}</span>
@@ -285,7 +285,7 @@ export function WorkspaceSection() {
             </ol>
           </aside>
 
-          <aside className="glass-card p-4">
+          <aside className="dashboard-card p-4">
             <h3 className="font-mono text-lg text-slate-900">每周AI机会简报</h3>
             <p className="mt-1 text-sm text-slate-600">每周精选10个AI项目和工具</p>
 
@@ -305,7 +305,7 @@ export function WorkspaceSection() {
             </button>
             <p className="mt-2 inline-flex items-center gap-1 text-xs text-slate-500">
               <TrendingUp className="h-3.5 w-3.5 text-indigo-500" />
-              仅UI演示，不会真实提交
+              仅 UI 展示，不会真实提交
             </p>
           </aside>
         </div>

@@ -2,8 +2,8 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 export function CommunityCta() {
   return (
-    <section className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
-      <div className="rounded-[24px] border border-indigo-100 bg-gradient-to-r from-indigo-600 via-violet-500 to-blue-500 px-6 py-8 text-white shadow-[0_25px_66px_-36px_rgba(79,70,229,0.88)] sm:px-8">
+    <section className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
+      <div className="rounded-3xl border border-indigo-100 bg-gradient-to-r from-indigo-600 to-violet-600 px-6 py-8 text-white shadow-[0_20px_60px_rgba(79,70,229,0.24)] sm:px-8">
         <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
           <div>
             <h2 className="font-mono text-3xl">加入AI创业雷达社区</h2>

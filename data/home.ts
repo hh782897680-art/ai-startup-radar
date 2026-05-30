@@ -7,11 +7,7 @@ export const navItems = [
   "推广文案",
   "AI工具",
   "排行榜",
-  "资源",
-  "关于我们",
 ];
-
-export const heroTags = ["项目发现", "商业分析", "AI建站方案"];
 
 export const heroStats = [
   { icon: "Radar", value: "10,328+", label: "收录AI项目" },
@@ -19,6 +15,8 @@ export const heroStats = [
   { icon: "Users", value: "18,732+", label: "创业者正在使用" },
   { icon: "Star", value: "99.2%", label: "用户好评" },
 ];
+
+export const heroTags = ["项目发现", "商业分析", "AI建站方案"];
 
 export const heroPreviewMetrics = [
   { label: "商业化潜力", value: "高" },
@@ -28,9 +26,9 @@ export const heroPreviewMetrics = [
 ];
 
 export const heroPreviewProjects = [
-  { name: "Open WebUI", score: "9.3", heat: "热度 1.6k" },
-  { name: "Dify", score: "9.1", heat: "热度 1.4k" },
-  { name: "RAGFlow", score: "8.7", heat: "热度 1.1k" },
+  { name: "Open WebUI", score: "9.3" },
+  { name: "Dify", score: "9.1" },
+  { name: "RAGFlow", score: "8.7" },
 ];
 
 export const featureCards = [
@@ -39,28 +37,28 @@ export const featureCards = [
     description: "输入GitHub链接，AI帮你判断商业化潜力、竞争度和SEO机会",
     button: "立即分析",
     icon: "Radar",
-    iconBg: "bg-gradient-to-br from-indigo-500 to-blue-500",
+    iconBg: "from-indigo-500 to-violet-500",
   },
   {
     title: "AI创业灵感生成器",
     description: "根据技能、预算和兴趣，生成适合你的AI项目点子",
     button: "生成灵感",
     icon: "Sparkles",
-    iconBg: "bg-gradient-to-br from-fuchsia-500 to-indigo-500",
+    iconBg: "from-fuchsia-500 to-indigo-500",
   },
   {
     title: "AI建站方案生成器",
     description: "一键生成网站结构、页面规划、功能模块和开发指令",
     button: "生成方案",
     icon: "LayoutGrid",
-    iconBg: "bg-gradient-to-br from-cyan-500 to-blue-500",
+    iconBg: "from-cyan-500 to-blue-500",
   },
   {
     title: "AI推广文案生成器",
     description: "生成小红书、X、TG、SEO文章和产品介绍文案",
     button: "生成文案",
     icon: "Rocket",
-    iconBg: "bg-gradient-to-br from-violet-500 to-indigo-500",
+    iconBg: "from-violet-500 to-indigo-500",
   },
 ];
 
@@ -107,7 +105,12 @@ export const opportunities = [
   },
 ];
 
-export const analyzerTags = ["vercel/ai", "langchain", "autogen", "mem0"];
+export const analyzerTags = [
+  "vercel/ai",
+  "langchain-ai/langchain",
+  "microsoft/autogen",
+  "mem0ai/mem0",
+];
 
 export const analyzerMetrics = [
   { label: "商业化潜力", value: "9.2/10", level: "高" },
@@ -146,7 +149,7 @@ export const hotProjects = [
     short: "B",
   },
   {
-    name: "Open WebUI",
+    name: "OpenWebUI",
     summary: "开源AI聊天界面",
     category: "AI应用",
     rating: "8.7",
@@ -217,7 +220,7 @@ export const tools = [
     availability: "需魔法",
     chinese: "支持中文",
     pricing: "付费",
-    scenario: "代码生成 / 重构",
+    scenario: "代码生成 / 工程提效",
     short: "C",
   },
   {
@@ -226,7 +229,7 @@ export const tools = [
     availability: "需魔法",
     chinese: "支持中文",
     pricing: "免费",
-    scenario: "资料检索 / 事实核查",
+    scenario: "信息检索 / 事实核查",
     short: "P",
   },
   {
@@ -235,7 +238,7 @@ export const tools = [
     availability: "需魔法",
     chinese: "支持中文",
     pricing: "付费",
-    scenario: "团队文档 / 项目协作",
+    scenario: "文档协作 / 会议整理",
     short: "N",
   },
   {
@@ -244,7 +247,7 @@ export const tools = [
     availability: "国内可用",
     chinese: "支持中文",
     pricing: "免费",
-    scenario: "长文阅读 / 报告总结",
+    scenario: "长文阅读 / 报告解析",
     short: "K",
   },
   {
@@ -253,7 +256,7 @@ export const tools = [
     availability: "国内可用",
     chinese: "支持中文",
     pricing: "免费",
-    scenario: "日常问答 / 创意辅助",
+    scenario: "日常问答 / 创意灵感",
     short: "豆",
   },
 ];
