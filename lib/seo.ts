@@ -3,12 +3,11 @@ import type { Metadata } from "next";
 const SITE_URL = "https://www.aiprojectradar.com";
 
 export const siteConfig = {
-  name: "AI Startup Radar",
+  name: "AI创业雷达",
   url: SITE_URL,
   description:
-    "Discover practical AI startup ideas, micro SaaS ideas, AI tool opportunities, MVP features, monetization models, SEO keywords, and launch checklists.",
-  defaultTitle:
-    "AI Startup Radar | Practical AI Startup Ideas and Micro SaaS Opportunities",
+    "AI创业雷达：发现、评分、拆解适合普通人的 AI 项目机会，提供项目库、排行榜与 7 天验证路径。",
+  defaultTitle: "AI创业雷达 | 发现、评分、拆解 AI 项目机会",
 };
 
 export function absoluteUrl(path = "/"): string {
@@ -22,6 +21,7 @@ type PageMetadataInput = {
   path: string;
   keywords?: string[];
   type?: "website" | "article";
+  imagePath?: string;
 };
 
 export function buildPageMetadata({
@@ -30,8 +30,10 @@ export function buildPageMetadata({
   path,
   keywords,
   type = "website",
+  imagePath = "/opengraph-image",
 }: PageMetadataInput): Metadata {
   const url = absoluteUrl(path);
+  const imageUrl = absoluteUrl(imagePath);
 
   return {
     title,
@@ -46,12 +48,20 @@ export function buildPageMetadata({
       url,
       type,
       siteName: siteConfig.name,
-      locale: "en_US",
+      locale: "zh_CN",
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: [imageUrl],
     },
   };
 }

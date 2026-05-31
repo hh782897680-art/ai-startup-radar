@@ -1,50 +1,42 @@
-import { SectionHeader } from "@/components/SectionHeader";
+import { Container } from "@/components/Container";
 import { buildPageMetadata } from "@/lib/seo";
 
 export const metadata = buildPageMetadata({
-  title: "Privacy Policy | AI Startup Radar",
-  description:
-    "Read the privacy policy for AI Startup Radar, including current data handling scope for this static content website.",
+  title: "隐私政策 | AI创业雷达",
+  description: "AI创业雷达隐私政策。",
   path: "/privacy-policy",
 });
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="container page-stack">
-      <SectionHeader eyebrow="Legal" title="Privacy Policy" />
-
-      <section className="content-panel prose-panel">
-        <p>Last updated: May 31, 2026</p>
-
-        <h2>1. Website scope</h2>
-        <p>
-          AI Startup Radar is currently a static content website. It provides educational content about AI startup ideas and build
-          strategies.
-        </p>
-
-        <h2>2. No account requirement</h2>
-        <p>This site does not require user registration, login, or account creation in its current version.</p>
-
-        <h2>3. No payment information collection</h2>
-        <p>This site does not collect payment card details or billing information in its current version.</p>
-
-        <h2>4. Data collection in current version</h2>
-        <p>
-          This version is designed as a static content experience. If analytics tools are added in the future, this policy will be
-          updated to describe what is collected and why.
-        </p>
-
-        <h2>5. External links</h2>
-        <p>
-          Some pages may include links to third-party websites. AI Startup Radar is not responsible for the privacy practices of those
-          external websites.
-        </p>
-
-        <h2>6. Policy updates</h2>
-        <p>
-          This policy may be updated as the product evolves. Material updates will be reflected on this page with a new update date.
-        </p>
+    <Container className="page">
+      <section className="page-intro">
+        <p className="section-kicker">法律信息</p>
+        <h1>隐私政策</h1>
+        <p>最后更新：2026年5月31日</p>
       </section>
-    </div>
+
+      <article className="copy-panel">
+        <section>
+          <h2>1. 网站性质</h2>
+          <p>AI创业雷达当前为静态内容站点，主要提供项目研究信息。</p>
+        </section>
+
+        <section>
+          <h2>2. 账号与支付</h2>
+          <p>当前版本不提供登录、注册和支付功能，不收集支付信息。</p>
+        </section>
+
+        <section>
+          <h2>3. 数据收集</h2>
+          <p>当前 MVP 不接数据库。若未来新增统计能力，将在本页明确说明范围与用途。</p>
+        </section>
+
+        <section>
+          <h2>4. 外部链接</h2>
+          <p>页面可能包含第三方链接，第三方网站的隐私政策不受本站控制。</p>
+        </section>
+      </article>
+    </Container>
   );
 }

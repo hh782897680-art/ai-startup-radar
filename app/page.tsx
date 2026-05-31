@@ -1,181 +1,167 @@
-import Link from "next/link";
-import { CategoryCard } from "@/components/CategoryCard";
-import { IdeaCard } from "@/components/IdeaCard";
-import { SectionHeader } from "@/components/SectionHeader";
-import { getAllCategories, getFeaturedIdeas, getLatestIdeas } from "@/lib/ideas";
+import { CheckCircle2 } from "lucide-react";
+import { Container } from "@/components/Container";
+import { Button } from "@/components/Button";
+import { ProjectCard } from "@/components/ProjectCard";
+import { RankingList } from "@/components/RankingList";
+import { TodayRadar } from "@/components/TodayRadar";
+import {
+  getAvoidForBeginners,
+  getBeginnerFriendlyRanking,
+  getFeaturedProjects,
+  getLowCompetitionRanking,
+  getTodayRadarProjects,
+  getToolSiteFitRanking,
+} from "@/lib/projects";
 import { buildPageMetadata } from "@/lib/seo";
 
 export const metadata = buildPageMetadata({
-  title: "AI Startup Radar | Practical AI Startup Ideas and Micro SaaS Opportunities",
+  title: "AI创业雷达 | 发现、评分、拆解 AI 项目机会",
   description:
-    "Discover practical AI startup ideas, micro SaaS ideas, AI tool opportunities, MVP features, monetization models, SEO keywords, and launch checklists.",
+    "AI创业雷达：发现、评分、拆解适合普通人的 AI 项目机会。包含项目库、排行榜、7天验证流程与新手避坑建议。",
   path: "/",
   keywords: [
-    "ai startup ideas",
-    "micro saas ideas",
-    "ai business opportunities",
-    "ai tool ideas",
+    "AI创业雷达",
+    "AI项目机会",
+    "AI项目拆解",
+    "项目排行榜",
+    "7天验证",
   ],
 });
 
+const steps = ["发现项目", "判断机会", "7天验证", "做MVP", "推广测试"];
+
 export default function HomePage() {
-  const featuredIdeas = getFeaturedIdeas();
-  const categories = getAllCategories();
-  const latestIdeas = getLatestIdeas(8);
-  const previewIdea = featuredIdeas[0];
+  const todayRadar = getTodayRadarProjects(3);
+  const beginnerRanking = getBeginnerFriendlyRanking(5);
+  const lowCompetitionRanking = getLowCompetitionRanking(5);
+  const toolSiteRanking = getToolSiteFitRanking(5);
+  const featuredProjects = getFeaturedProjects(6);
+  const avoidProjects = getAvoidForBeginners(4);
 
   return (
-    <div className="container page-stack">
-      <section className="hero-panel">
-        <div className="hero-content">
-          <p className="section-eyebrow">AI startup ideas database</p>
-          <h1>Discover practical AI startup ideas you can actually build</h1>
+    <Container className="page">
+      <section className="hero-mvp premium-card subtle-grid">
+        <div className="hero-mvp-left">
+          <p className="section-kicker">AI创业雷达</p>
+          <h1>
+            不要再盲目做项目，
+            <br />
+            先用雷达找到适合普通人的 AI 机会。
+          </h1>
           <p>
-            Explore micro SaaS opportunities and AI tool concepts by category, difficulty, and launch speed. Each idea includes pain
-            points, MVP features, monetization options, traffic channels, SEO keywords, and launch checklists.
+            我们把项目机会拆成可比较的维度：商业化潜力、竞争指数、小白友好度、SEO潜力和中文市场空间，
+            让你先判断，再动手。
           </p>
+
+          <ul className="hero-checks">
+            <li>
+              <CheckCircle2 size={16} aria-hidden="true" />
+              发现可落地的开源与工具型项目
+            </li>
+            <li>
+              <CheckCircle2 size={16} aria-hidden="true" />
+              提供 7 天验证路径，不拍脑袋开工
+            </li>
+            <li>
+              <CheckCircle2 size={16} aria-hidden="true" />
+              不承诺赚钱，只给可执行拆解
+            </li>
+          </ul>
+
           <div className="hero-actions">
-            <Link href="/ideas" className="button-primary">
-              Browse AI Ideas
-            </Link>
-            <Link href="/categories" className="button-secondary">
-              Explore Categories
-            </Link>
+            <Button href="/projects">进入 AI项目库</Button>
+            <Button href="/rankings" variant="secondary">
+              查看项目排行榜
+            </Button>
           </div>
         </div>
+      </section>
 
-        {previewIdea ? (
-          <aside className="preview-card" aria-label="Sample idea breakdown preview">
-            <p className="preview-label">Sample breakdown preview</p>
-            <h2>{previewIdea.title}</h2>
-            <p>{previewIdea.shortDescription}</p>
-            <ul>
-              <li>
-                <strong>Category:</strong> {previewIdea.category}
-              </li>
-              <li>
-                <strong>Difficulty:</strong> {previewIdea.difficulty}
-              </li>
-              <li>
-                <strong>Launch speed:</strong> {previewIdea.launchSpeed}
-              </li>
-              <li>
-                <strong>Build time:</strong> {previewIdea.estimatedBuildTime}
-              </li>
-            </ul>
-            <Link href={`/ideas/${previewIdea.slug}`} className="text-link">
-              Read this idea
-            </Link>
-          </aside>
-        ) : null}
+      <TodayRadar items={todayRadar} />
+
+      <section>
+        <div className="section-head">
+          <p className="section-kicker">AI项目榜单</p>
+          <h2 className="section-title">先看榜单，再决定投入方向</h2>
+        </div>
+        <div className="rankings-grid">
+          <RankingList
+            title="小白友好榜"
+            description="上手门槛更低，适合先做验证型项目。"
+            items={beginnerRanking}
+            scoreLabel="友好度"
+            scoreOf={(project) => project.beginnerFriendly}
+          />
+          <RankingList
+            title="低竞争榜"
+            description="竞争指数更低，更容易做差异化切入。"
+            items={lowCompetitionRanking}
+            scoreLabel="竞争"
+            scoreOf={(project) => project.competitionIndex}
+          />
+          <RankingList
+            title="适合工具站榜"
+            description="SEO潜力与中文市场机会更高，适合做工具站。"
+            items={toolSiteRanking}
+            scoreLabel="工具站适配"
+            scoreOf={(project) => (project.seoPotential + project.chineseMarketOpportunity) / 2}
+          />
+        </div>
       </section>
 
       <section>
-        <SectionHeader
-          eyebrow="Featured"
-          title="Featured AI Startup Ideas"
-          description="A curated set of practical ideas with clear problem framing and realistic MVP scope."
-        />
-        <div className="card-grid">
-          {featuredIdeas.map((idea) => (
-            <IdeaCard key={idea.slug} idea={idea} />
+        <div className="section-head">
+          <p className="section-kicker">项目拆解卡片</p>
+          <h2 className="section-title">先看 6 个高价值项目拆解</h2>
+        </div>
+        <div className="project-grid">
+          {featuredProjects.map((project) => (
+            <ProjectCard key={project.slug} project={project} />
           ))}
         </div>
       </section>
 
       <section>
-        <SectionHeader
-          eyebrow="Categories"
-          title="Explore by Category"
-          description="Browse idea families based on your product direction and skill profile."
-        />
-        <div className="card-grid category-grid">
-          {categories.map((category) => (
-            <CategoryCard key={category.slug} category={category} />
+        <div className="section-head">
+          <p className="section-kicker">新手使用流程</p>
+          <h2 className="section-title">五步走，避免“做了再后悔”</h2>
+        </div>
+        <div className="flow-grid">
+          {steps.map((step, index) => (
+            <article key={step} className="flow-step premium-card">
+              <span>{index + 1}</span>
+              <h3>{step}</h3>
+            </article>
           ))}
         </div>
       </section>
 
       <section>
-        <SectionHeader
-          eyebrow="Latest"
-          title="Latest AI Business Ideas"
-          description="Freshly added ideas you can review, adapt, and test with a focused MVP."
-        />
-        <ul className="latest-list">
-          {latestIdeas.map((idea) => (
-            <li key={idea.slug}>
-              <Link href={`/ideas/${idea.slug}`}>{idea.title}</Link>
-              <span>
-                {idea.category} · {idea.difficulty} · {idea.launchSpeed}
-              </span>
-            </li>
+        <div className="section-head">
+          <p className="section-kicker">不建议新手做的项目</p>
+          <h2 className="section-title">这些方向先谨慎</h2>
+        </div>
+        <div className="avoid-list premium-card">
+          {avoidProjects.map((project) => (
+            <article key={project.slug} className="avoid-item">
+              <h3>{project.name}</h3>
+              <p>{project.risks[0]}</p>
+            </article>
           ))}
-        </ul>
+          <Button href="/avoid" variant="secondary" size="sm">
+            查看完整避坑清单
+          </Button>
+        </div>
       </section>
 
-      <section className="content-panel">
-        <SectionHeader title="How to Use AI Startup Radar" />
-        <ol className="step-list">
-          <li>Choose a category that matches your background and interests.</li>
-          <li>Read the full business breakdown for one idea.</li>
-          <li>Build a small MVP focused on the core user problem.</li>
-          <li>Test traffic channels and monetization assumptions with real users.</li>
-        </ol>
-      </section>
-
-      <section className="content-panel">
-        <SectionHeader title="Why This Site Exists" />
+      <section className="about-brief premium-card">
+        <p className="section-kicker">关于本站</p>
+        <h2>AI创业雷达是什么？</h2>
         <p>
-          AI Startup Radar exists to help builders evaluate opportunities more systematically. It does not promise guaranteed outcomes.
-          Instead, it gives structured idea breakdowns so founders can make better decisions before investing significant time or
-          money.
+          这是一个中文优先的 AI 项目机会研究站，专注“普通人可执行”的小步验证路径。本站为静态MVP，
+          不接 API、不接数据库、不做假登录和假提交。
         </p>
       </section>
-
-      <section className="content-panel">
-        <SectionHeader title="FAQ" />
-        <div className="faq-list">
-          <article>
-            <h3>What is AI Startup Radar?</h3>
-            <p>
-              AI Startup Radar is a curated database of practical AI startup ideas, micro SaaS opportunities, and AI tool concepts for
-              builders.
-            </p>
-          </article>
-          <article>
-            <h3>Are these ideas guaranteed to make money?</h3>
-            <p>No. Every idea requires validation, execution, and real market feedback. There is no guaranteed income outcome.</p>
-          </article>
-          <article>
-            <h3>Do I need to be a developer?</h3>
-            <p>
-              Not always. Some ideas are beginner-friendly and can be launched with no-code or low-code tools, while others require
-              engineering depth.
-            </p>
-          </article>
-          <article>
-            <h3>How should I choose an idea?</h3>
-            <p>
-              Start with a category you understand, pick a pain point you can validate quickly, and choose a scope you can ship within
-              a few weeks.
-            </p>
-          </article>
-          <article>
-            <h3>Can I use these ideas for content or products?</h3>
-            <p>
-              Yes. You can adapt these ideas for educational content, product experiments, and business validation projects.
-            </p>
-          </article>
-          <article>
-            <h3>Will this site add AI generators later?</h3>
-            <p>
-              Potentially. Future versions may add tools and deeper resources, but this stage focuses on a high-quality static idea
-              library.
-            </p>
-          </article>
-        </div>
-      </section>
-    </div>
+    </Container>
   );
 }

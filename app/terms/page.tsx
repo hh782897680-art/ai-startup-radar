@@ -1,55 +1,42 @@
-import { SectionHeader } from "@/components/SectionHeader";
+import { Container } from "@/components/Container";
 import { buildPageMetadata } from "@/lib/seo";
 
 export const metadata = buildPageMetadata({
-  title: "Terms of Use | AI Startup Radar",
-  description:
-    "Review the terms of use for AI Startup Radar, including educational scope and no guaranteed outcome disclaimer.",
+  title: "使用条款 | AI创业雷达",
+  description: "AI创业雷达使用条款。",
   path: "/terms",
 });
 
 export default function TermsPage() {
   return (
-    <div className="container page-stack">
-      <SectionHeader eyebrow="Legal" title="Terms of Use" />
-
-      <section className="content-panel prose-panel">
-        <p>Last updated: May 31, 2026</p>
-
-        <h2>1. Informational purpose</h2>
-        <p>
-          Content on AI Startup Radar is provided for educational and informational purposes. It is intended to help users explore AI
-          startup ideas and implementation approaches.
-        </p>
-
-        <h2>2. No guaranteed results</h2>
-        <p>
-          AI Startup Radar does not guarantee revenue, business success, growth outcomes, or market fit from any idea presented on the
-          site.
-        </p>
-
-        <h2>3. User responsibility</h2>
-        <p>
-          Users are responsible for independently validating any idea before investing time, money, or resources into a project.
-        </p>
-
-        <h2>4. No professional advice</h2>
-        <p>
-          Content on this site is not financial, legal, tax, accounting, or business advice. For professional guidance, consult licensed
-          advisors.
-        </p>
-
-        <h2>5. External links disclaimer</h2>
-        <p>
-          The site may link to third-party resources. AI Startup Radar is not responsible for the availability, accuracy, or policies of
-          external websites.
-        </p>
-
-        <h2>6. Changes to these terms</h2>
-        <p>
-          Terms may be updated as the product evolves. Continued use of the site after updates indicates acceptance of revised terms.
-        </p>
+    <Container className="page">
+      <section className="page-intro">
+        <p className="section-kicker">法律信息</p>
+        <h1>使用条款</h1>
+        <p>最后更新：2026年5月31日</p>
       </section>
-    </div>
+
+      <article className="copy-panel">
+        <section>
+          <h2>1. 信息用途</h2>
+          <p>本站内容用于项目研究与学习参考，不构成投资、法律或财务建议。</p>
+        </section>
+
+        <section>
+          <h2>2. 收益声明</h2>
+          <p>本站不承诺任何收益或成功结果，用户需自行完成验证并承担决策责任。</p>
+        </section>
+
+        <section>
+          <h2>3. 用户责任</h2>
+          <p>你应根据自身情况判断项目可行性，在投入时间或资金前完成独立评估。</p>
+        </section>
+
+        <section>
+          <h2>4. 条款更新</h2>
+          <p>条款可能随产品迭代更新，继续使用即视为接受更新后的条款。</p>
+        </section>
+      </article>
+    </Container>
   );
 }

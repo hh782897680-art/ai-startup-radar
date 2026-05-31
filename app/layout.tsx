@@ -1,18 +1,13 @@
 import type { Metadata } from "next";
-import { Manrope, Source_Serif_4 } from "next/font/google";
+import { Geist } from "next/font/google";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { siteConfig } from "@/lib/seo";
+import { absoluteUrl, siteConfig } from "@/lib/seo";
 import "./globals.css";
 
-const manrope = Manrope({
+const geist = Geist({
   subsets: ["latin"],
-  variable: "--font-manrope",
-});
-
-const sourceSerif = Source_Serif_4({
-  subsets: ["latin"],
-  variable: "--font-source-serif",
+  variable: "--font-geist",
 });
 
 export const metadata: Metadata = {
@@ -27,19 +22,27 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     url: siteConfig.url,
     siteName: siteConfig.name,
-    locale: "en_US",
+    locale: "zh_CN",
     type: "website",
+    images: [
+      {
+        url: absoluteUrl("/opengraph-image"),
+        width: 1200,
+        height: 630,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: siteConfig.defaultTitle,
     description: siteConfig.description,
+    images: [absoluteUrl("/opengraph-image")],
   },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${manrope.variable} ${sourceSerif.variable}`}>
+    <html lang="zh-CN" className={geist.variable}>
       <body>
         <div className="site-shell">
           <Header />

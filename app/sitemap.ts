@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getAllCategories, getAllIdeas } from "@/lib/ideas";
+import { getAllProjects } from "@/lib/projects";
 import { absoluteUrl } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -7,10 +7,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticRoutes = [
     "/",
-    "/ideas",
-    "/categories",
+    "/projects",
+    "/rankings",
+    "/guides",
+    "/avoid",
     "/about",
-    "/build-guides",
     "/privacy-policy",
     "/terms",
   ].map((path) => ({
@@ -20,19 +21,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: path === "/" ? 1 : 0.8,
   }));
 
-  const ideaRoutes = getAllIdeas().map((idea) => ({
-    url: absoluteUrl(`/ideas/${idea.slug}`),
+  const projectRoutes = getAllProjects().map((project) => ({
+    url: absoluteUrl(`/projects/${project.slug}`),
     lastModified,
     changeFrequency: "weekly" as const,
     priority: 0.7,
   }));
 
-  const categoryRoutes = getAllCategories().map((category) => ({
-    url: absoluteUrl(`/categories/${category.slug}`),
-    lastModified,
-    changeFrequency: "weekly" as const,
-    priority: 0.7,
-  }));
-
-  return [...staticRoutes, ...ideaRoutes, ...categoryRoutes];
+  return [...staticRoutes, ...projectRoutes];
 }

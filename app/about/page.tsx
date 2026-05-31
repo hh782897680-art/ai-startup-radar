@@ -1,48 +1,50 @@
-import { SectionHeader } from "@/components/SectionHeader";
+import { Container } from "@/components/Container";
 import { buildPageMetadata } from "@/lib/seo";
 
 export const metadata = buildPageMetadata({
-  title: "About AI Startup Radar",
-  description:
-    "Learn what AI Startup Radar is, who it is for, how ideas are organized, and how builders should use this resource.",
+  title: "关于本站 | AI创业雷达",
+  description: "AI创业雷达的定位、方法和边界说明。",
   path: "/about",
-  keywords: ["about ai startup radar", "ai startup ideas resource", "micro saas research hub"],
+  keywords: ["关于AI创业雷达", "AI项目研究站", "项目验证方法"],
 });
 
 export default function AboutPage() {
   return (
-    <div className="container page-stack">
-      <SectionHeader
-        eyebrow="About"
-        title="What AI Startup Radar Is"
-        description="AI Startup Radar is a curated content site focused on practical AI startup ideas and clear execution frameworks."
-      />
-
-      <section className="content-panel prose-panel">
-        <h2>Who this is for</h2>
+    <Container className="page">
+      <section className="page-intro">
+        <p className="section-kicker">关于本站</p>
+        <h1>为什么做 AI创业雷达</h1>
         <p>
-          This site is built for indie hackers, creators, solo founders, and small teams who want structured ways to evaluate AI startup
-          opportunities.
-        </p>
-
-        <h2>How ideas are organized</h2>
-        <p>
-          Ideas are grouped by category and enriched with practical fields: target users, pain points, solution framing, MVP features,
-          monetization models, traffic channels, SEO keywords, and launch checklists.
-        </p>
-
-        <h2>What this site does not promise</h2>
-        <p>
-          AI Startup Radar does not promise guaranteed revenue, guaranteed growth, or guaranteed business outcomes. Every idea still
-          requires market validation and disciplined execution.
-        </p>
-
-        <h2>How builders should use the ideas</h2>
-        <p>
-          Pick one idea aligned with your skill set, keep scope small, ship a focused MVP, and test user demand early through real
-          distribution channels.
+          大多数人不是缺执行力，而是缺“先判断机会”的方法。AI创业雷达把项目机会结构化，帮助你少走弯路。
         </p>
       </section>
-    </div>
+
+      <article className="copy-panel">
+        <section>
+          <h2>本站定位</h2>
+          <p>
+            这是一个中文优先的静态 MVP，专注发现、评分、拆解适合普通人的 AI 项目机会。
+          </p>
+        </section>
+
+        <section>
+          <h2>本站不做什么</h2>
+          <ul>
+            <li>不承诺赚钱结果。</li>
+            <li>不做假登录、假提交、假数据看板。</li>
+            <li>不接 API、不接数据库。</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>建议使用方式</h2>
+          <ul>
+            <li>先看排行榜，缩小方向。</li>
+            <li>再看项目拆解，明确验证路径。</li>
+            <li>按 7 天验证流程做最小实验。</li>
+          </ul>
+        </section>
+      </article>
+    </Container>
   );
 }
