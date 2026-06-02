@@ -19,7 +19,7 @@ export default function PrivacyPolicyPage() {
       <article className="copy-panel">
         <section>
           <h2>1. 网站性质</h2>
-          <p>AI创业雷达当前为静态内容站点，主要提供项目研究信息。</p>
+          <p>AI创业雷达主要提供项目研究、学习参考与验证思路，不承诺项目收益。</p>
         </section>
 
         <section>
@@ -29,7 +29,7 @@ export default function PrivacyPolicyPage() {
 
         <section>
           <h2>3. 数据收集</h2>
-          <p>当前 MVP 不接数据库。若未来新增统计能力，将在本页明确说明范围与用途。</p>
+          <p>本站不会要求你提交敏感个人信息。若未来新增统计或互动能力，将在本页明确说明范围与用途。</p>
         </section>
 
         <section>

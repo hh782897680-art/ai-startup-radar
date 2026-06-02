@@ -15,9 +15,9 @@ export const metadata = buildPageMetadata({
 });
 
 export default function RankingsPage() {
-  const beginnerRanking = getBeginnerFriendlyRanking(10);
-  const lowCompetitionRanking = getLowCompetitionRanking(10);
-  const toolSiteRanking = getToolSiteFitRanking(10);
+  const beginnerRanking = getBeginnerFriendlyRanking(5);
+  const lowCompetitionRanking = getLowCompetitionRanking(5);
+  const toolSiteRanking = getToolSiteFitRanking(5);
 
   return (
     <Container className="page">

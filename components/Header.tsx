@@ -12,6 +12,7 @@ const navLinks = [
   { href: "/", label: "首页" },
   { href: "/projects", label: "AI项目库" },
   { href: "/rankings", label: "项目排行榜" },
+  { href: "/blog", label: "关键词文章" },
   { href: "/guides", label: "新手指南" },
   { href: "/avoid", label: "避坑清单" },
   { href: "/about", label: "关于本站" },

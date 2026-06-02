@@ -1,14 +1,17 @@
-import { CheckCircle2 } from "lucide-react";
+import Link from "next/link";
 import { Container } from "@/components/Container";
 import { Button } from "@/components/Button";
 import { ProjectCard } from "@/components/ProjectCard";
 import { RankingList } from "@/components/RankingList";
+import { SubscribeCta } from "@/components/SubscribeCta";
 import { TodayRadar } from "@/components/TodayRadar";
+import { getFeaturedArticles } from "@/lib/articles";
 import {
   getAvoidForBeginners,
   getBeginnerFriendlyRanking,
   getFeaturedProjects,
   getLowCompetitionRanking,
+  getProjectOverallScore,
   getTodayRadarProjects,
   getToolSiteFitRanking,
 } from "@/lib/projects";
@@ -32,11 +35,13 @@ const steps = ["发现项目", "判断机会", "7天验证", "做MVP", "推广�
 
 export default function HomePage() {
   const todayRadar = getTodayRadarProjects(3);
-  const beginnerRanking = getBeginnerFriendlyRanking(5);
-  const lowCompetitionRanking = getLowCompetitionRanking(5);
-  const toolSiteRanking = getToolSiteFitRanking(5);
+  const todayPick = todayRadar[0];
+  const beginnerRanking = getBeginnerFriendlyRanking(3);
+  const lowCompetitionRanking = getLowCompetitionRanking(3);
+  const toolSiteRanking = getToolSiteFitRanking(3);
   const featuredProjects = getFeaturedProjects(6);
   const avoidProjects = getAvoidForBeginners(4);
+  const featuredArticles = getFeaturedArticles(6);
 
   return (
     <Container className="page">
@@ -44,37 +49,56 @@ export default function HomePage() {
         <div className="hero-mvp-left">
           <p className="section-kicker">AI创业雷达</p>
           <h1>
-            不要再盲目做项目，
+            找到下一个
             <br />
-            先用雷达找到适合普通人的 AI 机会。
+            值得你动手的 AI 项目
           </h1>
           <p>
-            我们把项目机会拆成可比较的维度：商业化潜力、竞争指数、小白友好度、SEO潜力和中文市场空间，
-            让你先判断，再动手。
+            AI创业雷达从 AI 工具、开源项目和海外小生意中，筛选适合普通人的项目机会，拆解流量、变现、难度和 7 天验证路径。
           </p>
 
-          <ul className="hero-checks">
-            <li>
-              <CheckCircle2 size={16} aria-hidden="true" />
-              发现可落地的开源与工具型项目
-            </li>
-            <li>
-              <CheckCircle2 size={16} aria-hidden="true" />
-              提供 7 天验证路径，不拍脑袋开工
-            </li>
-            <li>
-              <CheckCircle2 size={16} aria-hidden="true" />
-              不承诺赚钱，只给可执行拆解
-            </li>
-          </ul>
-
           <div className="hero-actions">
-            <Button href="/projects">进入 AI项目库</Button>
+            <Button href="#today-radar">查看今日项目</Button>
             <Button href="/rankings" variant="secondary">
-              查看项目排行榜
+              浏览项目榜单
             </Button>
           </div>
         </div>
+        {todayPick ? (
+          <aside className="today-insight-card" aria-label="今日雷达卡">
+            <div className="today-insight-head">
+              <span>本周精选项目</span>
+              <strong>{todayPick.name}</strong>
+              <small>站内参考评分，仅供参考</small>
+            </div>
+            <div className="today-score-panel">
+              <span>综合评分</span>
+              <strong>{getProjectOverallScore(todayPick)}</strong>
+            </div>
+            <dl className="today-metric-grid">
+              <div>
+                <dt>商业化潜力</dt>
+                <dd>{todayPick.commercialPotential.toFixed(1)}</dd>
+              </div>
+              <div>
+                <dt>竞争指数</dt>
+                <dd>{todayPick.competitionIndex.toFixed(1)}</dd>
+              </div>
+              <div>
+                <dt>小白友好</dt>
+                <dd>{todayPick.beginnerFriendly.toFixed(1)}</dd>
+              </div>
+              <div>
+                <dt>SEO潜力</dt>
+                <dd>{todayPick.seoPotential.toFixed(1)}</dd>
+              </div>
+            </dl>
+            <div className="today-why">
+              <span>为什么值得看</span>
+              <p>{todayPick.whyItWorks}</p>
+            </div>
+          </aside>
+        ) : null}
       </section>
 
       <TodayRadar items={todayRadar} />
@@ -123,6 +147,33 @@ export default function HomePage() {
 
       <section>
         <div className="section-head">
+          <p className="section-kicker">关键词文章</p>
+          <h2 className="section-title">用长尾关键词持续拿搜索流量</h2>
+        </div>
+        <div className="article-grid article-grid-compact">
+          {featuredArticles.map((article) => (
+            <article key={article.slug} className="article-card premium-card">
+              <div className="article-card-meta">
+                <span>{article.keyword}</span>
+              </div>
+              <h3>
+                <Link href={`/blog/${article.slug}`}>{article.title}</Link>
+              </h3>
+              <p>{article.description}</p>
+            </article>
+          ))}
+        </div>
+        <div className="section-action">
+          <Button href="/blog" variant="secondary">
+            查看全部关键词文章
+          </Button>
+        </div>
+      </section>
+
+      <SubscribeCta />
+
+      <section>
+        <div className="section-head">
           <p className="section-kicker">新手使用流程</p>
           <h2 className="section-title">五步走，避免“做了再后悔”</h2>
         </div>
@@ -158,8 +209,8 @@ export default function HomePage() {
         <p className="section-kicker">关于本站</p>
         <h2>AI创业雷达是什么？</h2>
         <p>
-          这是一个中文优先的 AI 项目机会研究站，专注“普通人可执行”的小步验证路径。本站为静态MVP，
-          不接 API、不接数据库、不做假登录和假提交。
+          这是一个中文优先的 AI 项目机会研究站，专注“普通人可执行”的小步验证路径。本站内容用于项目研究与学习参考，
+          不承诺收益，建议你先做小范围验证，再决定是否投入更多时间。
         </p>
       </section>
     </Container>

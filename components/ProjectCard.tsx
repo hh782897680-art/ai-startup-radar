@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import type { ProjectOpportunity } from "@/data/projects";
+import type { EnrichedProjectOpportunity } from "@/lib/projects";
 
 type ProjectCardProps = {
-  project: ProjectOpportunity;
+  project: EnrichedProjectOpportunity;
 };
 
 export function ProjectCard({ project }: ProjectCardProps) {
@@ -21,11 +21,21 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <strong>流量渠道：</strong>
         {project.trafficChannels[0]}
       </p>
+      <p className="project-line">
+        <strong>入门报价：</strong>
+        {project.pricing.starter}
+      </p>
 
       <div className="project-metrics">
         <span>商业化 {project.commercialPotential.toFixed(1)}</span>
         <span>竞争 {project.competitionIndex.toFixed(1)}</span>
         <span>小白友好 {project.beginnerFriendly.toFixed(1)}</span>
+      </div>
+
+      <div className="keyword-row">
+        {project.seoKeywords.slice(0, 3).map((keyword) => (
+          <span key={keyword}>{keyword}</span>
+        ))}
       </div>
 
       <Link href={`/projects/${project.slug}`} className="inline-link">

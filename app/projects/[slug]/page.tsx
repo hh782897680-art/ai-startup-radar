@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
+import { SubscribeCta } from "@/components/SubscribeCta";
 import { Tag } from "@/components/Tag";
 import { buildPageMetadata, truncateDescription } from "@/lib/seo";
 import { getAllProjects, getProjectBySlug, getProjectOverallScore } from "@/lib/projects";
@@ -31,11 +32,35 @@ export async function generateMetadata({ params }: ProjectDetailPageProps): Prom
 
   return buildPageMetadata({
     title: `${project.name} 项目拆解 | AI创业雷达`,
-    description: truncateDescription(project.summary),
+    description: truncateDescription(`${project.summary} 包含 SEO 关键词、竞品、报价区间和 7 天验证模板。`),
     path: `/projects/${project.slug}`,
-    keywords: [project.name, project.category, "AI项目拆解"],
+    keywords: [project.name, project.category, "AI项目拆解", ...project.seoKeywords],
     type: "article",
   });
+}
+
+function getBeginnerVerdict(project: NonNullable<ReturnType<typeof getProjectBySlug>>) {
+  if (project.beginnerFriendly >= 7.8 && project.competitionIndex <= 6.2) {
+    return {
+      conclusion: "适合新手从轻量版本开始，但不要一上来做复杂后台。",
+      entry: project.mvpSuggestion,
+      risk: project.risks[0],
+    };
+  }
+
+  if (project.beginnerFriendly >= 7) {
+    return {
+      conclusion: "可以做，但建议先缩小到一个垂直场景，优先验证需求和付费意愿。",
+      entry: project.mvpSuggestion,
+      risk: project.risks[0],
+    };
+  }
+
+  return {
+    conclusion: "不建议纯小白直接做完整产品，更适合从服务、教程内容或行业模板包切入。",
+    entry: project.mvpSuggestion,
+    risk: project.risks[0],
+  };
 }
 
 export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {
@@ -47,6 +72,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
   }
 
   const score = getProjectOverallScore(project);
+  const beginnerVerdict = getBeginnerVerdict(project);
 
   return (
     <Container className="page">
@@ -74,6 +100,27 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           </Button>
         </div>
       </article>
+
+      <section className="beginner-verdict premium-card">
+        <div>
+          <p className="section-kicker">小白结论</p>
+          <h2>小白能不能做？</h2>
+        </div>
+        <p className="verdict-lead">{beginnerVerdict.conclusion}</p>
+        <div className="verdict-grid">
+          <article>
+            <span>最小切入方式</span>
+            <p>{beginnerVerdict.entry}</p>
+          </article>
+          <article>
+            <span>最大风险</span>
+            <p>{beginnerVerdict.risk}</p>
+          </article>
+        </div>
+        <p className="snapshot-disclaimer">
+          先验证是否有人愿意为解决方案付费，再考虑开发完整工具。本站不承诺收益。
+        </p>
+      </section>
 
       <div className="brief-layout">
         <div className="brief-main">
@@ -106,6 +153,45 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           </section>
 
           <section className="opportunity-section">
+            <h2>SEO关键词</h2>
+            <p>这些关键词适合用于项目落地页、教程文章、案例页和对比页。</p>
+            <div className="keyword-row keyword-row-large">
+              {project.seoKeywords.map((keyword) => (
+                <span key={keyword}>{keyword}</span>
+              ))}
+            </div>
+          </section>
+
+          <section className="opportunity-section">
+            <h2>竞品与替代方案</h2>
+            <p>不要只看直接竞品，也要看用户现在用来绕开问题的人工方案。</p>
+            <ul className="check-list">
+              {project.competitors.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="opportunity-section">
+            <h2>建议报价区间</h2>
+            <div className="pricing-grid">
+              <article>
+                <span>入门产品</span>
+                <p>{project.pricing.starter}</p>
+              </article>
+              <article>
+                <span>服务交付</span>
+                <p>{project.pricing.service}</p>
+              </article>
+              <article>
+                <span>高级订阅</span>
+                <p>{project.pricing.premium}</p>
+              </article>
+            </div>
+            <p className="snapshot-disclaimer">报价仅用于验证付费意愿，不代表收益承诺。</p>
+          </section>
+
+          <section className="opportunity-section">
             <h2>可尝试变现路径</h2>
             <ul className="check-list">
               {project.monetizationIdeas.map((item) => (
@@ -127,6 +213,18 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                 <li key={item}>{item}</li>
               ))}
             </ul>
+          </section>
+
+          <section className="opportunity-section">
+            <h2>验证模板</h2>
+            <ol className="ordered-list">
+              {project.validationTemplate.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ol>
+            <Link href="/templates/ai-project-validation-template" className="inline-link">
+              打开完整 7 天验证模板
+            </Link>
           </section>
 
           <section className="opportunity-section">
@@ -168,13 +266,26 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
               <dt>首个MVP建议</dt>
               <dd>{project.mvpSuggestion}</dd>
             </div>
+            <div>
+              <dt>入门报价</dt>
+              <dd>{project.pricing.starter}</dd>
+            </div>
+            <div>
+              <dt>首个SEO关键词</dt>
+              <dd>{project.seoKeywords[0]}</dd>
+            </div>
           </dl>
           <p className="snapshot-disclaimer">评分说明：站内参考评分，仅供参考。</p>
-          <Link href="/guides" className="inline-link">
-            查看新手指南
+          <Link href="/templates/ai-project-validation-template" className="inline-link">
+            下载验证模板
           </Link>
         </aside>
       </div>
+
+      <SubscribeCta
+        title={`领取 ${project.name} 验证模板`}
+        description="用免费模板记录用户访谈、竞品、报价和 7 天验证结论，避免还没验证就投入开发。"
+      />
     </Container>
   );
 }

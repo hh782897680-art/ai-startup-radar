@@ -23,7 +23,7 @@ export default function AboutPage() {
         <section>
           <h2>本站定位</h2>
           <p>
-            这是一个中文优先的静态 MVP，专注发现、评分、拆解适合普通人的 AI 项目机会。
+            这是一个中文优先的 AI 项目机会研究站，专注发现、评分、拆解适合普通人的 AI 项目方向。
           </p>
         </section>
 
@@ -31,8 +31,8 @@ export default function AboutPage() {
           <h2>本站不做什么</h2>
           <ul>
             <li>不承诺赚钱结果。</li>
-            <li>不做假登录、假提交、假数据看板。</li>
-            <li>不接 API、不接数据库。</li>
+            <li>不把参考评分包装成官方数据。</li>
+            <li>不建议在没有验证需求前投入大量开发成本。</li>
           </ul>
         </section>
 

@@ -5,8 +5,10 @@ const links = {
   product: [
     { href: "/projects", label: "AI项目库" },
     { href: "/rankings", label: "项目排行榜" },
+    { href: "/blog", label: "关键词文章" },
     { href: "/guides", label: "新手指南" },
     { href: "/avoid", label: "不建议新手做的项目" },
+    { href: "/templates/ai-project-validation-template", label: "免费验证模板" },
   ],
   company: [{ href: "/about", label: "关于本站" }],
   legal: [
@@ -62,7 +64,7 @@ export function Footer() {
 
         <div className="footer-bottom">
           <p>© {new Date().getFullYear()} AI创业雷达</p>
-          <p>Static MVP · 无API · 无数据库 · 无虚假功能</p>
+          <p>本站为项目研究与学习参考，不承诺收益，请自行验证。</p>
         </div>
       </Container>
     </footer>
