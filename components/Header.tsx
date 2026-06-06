@@ -12,6 +12,7 @@ const navLinks = [
   { href: "/", label: "首页" },
   { href: "/projects", label: "AI项目库" },
   { href: "/rankings", label: "项目排行榜" },
+  { href: "/match", label: "匹配测试" },
   { href: "/blog", label: "关键词文章" },
   { href: "/guides", label: "新手指南" },
   { href: "/avoid", label: "避坑清单" },
@@ -53,8 +54,8 @@ export function Header() {
         </div>
 
         <div className="header-right">
-          <Button href="/projects" size="sm" className="desktop-cta">
-            查看项目
+          <Button href="/match" size="sm" className="desktop-cta">
+            测一测
           </Button>
 
           <button
@@ -82,8 +83,8 @@ export function Header() {
               {link.label}
             </Link>
           ))}
-          <Button href="/projects" onClick={() => setMobileOpen(false)} className="mobile-nav-cta">
-            查看项目
+          <Button href="/match" onClick={() => setMobileOpen(false)} className="mobile-nav-cta">
+            测一测适合我的项目
           </Button>
         </Container>
       </div>

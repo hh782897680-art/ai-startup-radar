@@ -1,51 +1,27 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
-import { Search } from "lucide-react";
+import { GitCompareArrows, Search, X } from "lucide-react";
 import { ProjectCard } from "@/components/ProjectCard";
 import { getProjectOverallScore, type EnrichedProjectOpportunity } from "@/lib/projects";
+import {
+  codeRequirementLabels,
+  getProjectDecisionProfile,
+  monetizationTypeLabels,
+  startupCostLabels,
+  trafficTypeLabels,
+  type CodeRequirement,
+  type MonetizationType,
+  type StartupCost,
+  type TrafficType,
+} from "@/lib/project-profile";
 
-type SignalKey = "all" | "beginner" | "lowCompetition" | "toolSite" | "china" | "serviceReady";
-type MonetizationKey = "all" | "subscription" | "service" | "template" | "training" | "affiliate";
 type SortKey = "radar" | "commercial" | "beginner" | "seo" | "lowCompetition";
 
 type ProjectFiltersProps = {
   projects: EnrichedProjectOpportunity[];
 };
-
-const signalFilters: Array<{
-  key: SignalKey;
-  label: string;
-  matches: (project: EnrichedProjectOpportunity) => boolean;
-}> = [
-  { key: "all", label: "全部", matches: () => true },
-  { key: "beginner", label: "小白友好", matches: (project) => project.beginnerFriendly >= 7.5 },
-  { key: "lowCompetition", label: "低竞争", matches: (project) => project.competitionIndex <= 6 },
-  {
-    key: "toolSite",
-    label: "适合工具站",
-    matches: (project) => project.seoPotential >= 8.5 || project.category.includes("工具"),
-  },
-  { key: "china", label: "中文市场机会", matches: (project) => project.chineseMarketOpportunity >= 8.5 },
-  {
-    key: "serviceReady",
-    label: "适合先卖服务",
-    matches: (project) => project.monetizationIdeas.some((item) => /服务|部署|顾问|交付|代运营/.test(item)),
-  },
-];
-
-const monetizationFilters: Array<{
-  key: MonetizationKey;
-  label: string;
-  matches: (project: EnrichedProjectOpportunity) => boolean;
-}> = [
-  { key: "all", label: "不限变现", matches: () => true },
-  { key: "subscription", label: "订阅", matches: (project) => /订阅|月度|年费|席位/.test(project.monetizationIdeas.join(" ")) },
-  { key: "service", label: "服务交付", matches: (project) => /服务|部署|顾问|代运营|交付/.test(project.monetizationIdeas.join(" ")) },
-  { key: "template", label: "模板包", matches: (project) => /模板/.test(project.monetizationIdeas.join(" ")) },
-  { key: "training", label: "培训课程", matches: (project) => /培训|课程|训练营|内训/.test(project.monetizationIdeas.join(" ")) },
-  { key: "affiliate", label: "广告联盟", matches: (project) => /广告|联盟|分成|线索/.test(project.monetizationIdeas.join(" ")) },
-];
 
 const sortOptions: Array<{ key: SortKey; label: string }> = [
   { key: "radar", label: "雷达综合评分" },
@@ -56,25 +32,34 @@ const sortOptions: Array<{ key: SortKey; label: string }> = [
 ];
 
 export function ProjectFilters({ projects }: ProjectFiltersProps) {
-  const [activeSignal, setActiveSignal] = useState<SignalKey>("all");
   const [activeCategory, setActiveCategory] = useState("all");
-  const [activeMonetization, setActiveMonetization] = useState<MonetizationKey>("all");
+  const [beginner, setBeginner] = useState("all");
+  const [code, setCode] = useState<CodeRequirement | "all">("all");
+  const [cost, setCost] = useState<StartupCost | "all">("all");
+  const [traffic, setTraffic] = useState<TrafficType | "all">("all");
+  const [monetization, setMonetization] = useState<MonetizationType | "all">("all");
   const [activeSort, setActiveSort] = useState<SortKey>("radar");
   const [query, setQuery] = useState("");
+  const [compareSlugs, setCompareSlugs] = useState<string[]>([]);
 
   const categories = useMemo(() => ["all", ...Array.from(new Set(projects.map((project) => project.category)))], [projects]);
-
-  const activeSignalDefinition = signalFilters.find((filter) => filter.key === activeSignal) ?? signalFilters[0];
-  const activeMonetizationDefinition =
-    monetizationFilters.find((filter) => filter.key === activeMonetization) ?? monetizationFilters[0];
 
   const visibleProjects = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
     return projects
-      .filter((project) => activeSignalDefinition.matches(project))
       .filter((project) => activeCategory === "all" || project.category === activeCategory)
-      .filter((project) => activeMonetizationDefinition.matches(project))
+      .filter((project) => {
+        const profile = getProjectDecisionProfile(project);
+        return beginner === "all" || (beginner === "yes" ? profile.beginnerSuitable : !profile.beginnerSuitable);
+      })
+      .filter((project) => code === "all" || getProjectDecisionProfile(project).codeRequirement === code)
+      .filter((project) => cost === "all" || getProjectDecisionProfile(project).startupCost === cost)
+      .filter((project) => traffic === "all" || getProjectDecisionProfile(project).trafficTypes.includes(traffic))
+      .filter(
+        (project) =>
+          monetization === "all" || getProjectDecisionProfile(project).monetizationTypes.includes(monetization),
+      )
       .filter((project) => {
         if (!normalizedQuery) {
           return true;
@@ -116,14 +101,14 @@ export function ProjectFilters({ projects }: ProjectFiltersProps) {
 
         return getProjectOverallScore(b) - getProjectOverallScore(a);
       });
-  }, [activeCategory, activeMonetizationDefinition, activeSignalDefinition, activeSort, projects, query]);
+  }, [activeCategory, activeSort, beginner, code, cost, monetization, projects, query, traffic]);
 
   const radarStats = useMemo(
     () => [
       { label: "项目机会", value: projects.length },
       { label: "高商业化", value: projects.filter((project) => project.commercialPotential >= 8.5).length },
       { label: "SEO 高潜力", value: projects.filter((project) => project.seoPotential >= 8.5).length },
-      { label: "低竞争切入", value: projects.filter((project) => project.competitionIndex <= 6).length },
+      { label: "适合新手", value: projects.filter((project) => getProjectDecisionProfile(project).beginnerSuitable).length },
     ],
     [projects],
   );
@@ -159,7 +144,7 @@ export function ProjectFilters({ projects }: ProjectFiltersProps) {
           </label>
 
           <label className="radar-select">
-            <span>项目类别</span>
+            <span>项目类型</span>
             <select value={activeCategory} onChange={(event) => setActiveCategory(event.target.value)}>
               {categories.map((category) => (
                 <option key={category} value={category}>
@@ -170,50 +155,66 @@ export function ProjectFilters({ projects }: ProjectFiltersProps) {
           </label>
 
           <label className="radar-select">
-            <span>变现方式</span>
-            <select
-              value={activeMonetization}
-              onChange={(event) => setActiveMonetization(event.target.value as MonetizationKey)}
-            >
-              {monetizationFilters.map((filter) => (
-                <option key={filter.key} value={filter.key}>
-                  {filter.label}
-                </option>
+            <span>是否适合新手</span>
+            <select value={beginner} onChange={(event) => setBeginner(event.target.value)}>
+              <option value="all">不限</option>
+              <option value="yes">适合新手</option>
+              <option value="no">更适合有经验者</option>
+            </select>
+          </label>
+
+          <label className="radar-select">
+            <span>是否需要代码</span>
+            <select value={code} onChange={(event) => setCode(event.target.value as CodeRequirement | "all")}>
+              <option value="all">不限</option>
+              {(Object.entries(codeRequirementLabels) as Array<[CodeRequirement, string]>).map(([value, label]) => (
+                <option key={value} value={value}>{label}</option>
               ))}
             </select>
           </label>
 
           <label className="radar-select">
-            <span>排序</span>
+            <span>启动成本</span>
+            <select value={cost} onChange={(event) => setCost(event.target.value as StartupCost | "all")}>
+              <option value="all">不限</option>
+              {(Object.entries(startupCostLabels) as Array<[StartupCost, string]>).map(([value, label]) => (
+                <option key={value} value={value}>{label}</option>
+              ))}
+            </select>
+          </label>
+
+          <label className="radar-select">
+            <span>流量渠道</span>
+            <select value={traffic} onChange={(event) => setTraffic(event.target.value as TrafficType | "all")}>
+              <option value="all">不限</option>
+              {(Object.entries(trafficTypeLabels) as Array<[TrafficType, string]>).map(([value, label]) => (
+                <option key={value} value={value}>{label}</option>
+              ))}
+            </select>
+          </label>
+
+          <label className="radar-select">
+            <span>变现方式</span>
+            <select
+              value={monetization}
+              onChange={(event) => setMonetization(event.target.value as MonetizationType | "all")}
+            >
+              <option value="all">不限</option>
+              {(Object.entries(monetizationTypeLabels) as Array<[MonetizationType, string]>).map(([value, label]) => (
+                <option key={value} value={value}>{label}</option>
+              ))}
+            </select>
+          </label>
+
+          <label className="radar-select">
+            <span>排序方式</span>
             <select value={activeSort} onChange={(event) => setActiveSort(event.target.value as SortKey)}>
               {sortOptions.map((option) => (
-                <option key={option.key} value={option.key}>
-                  {option.label}
-                </option>
+                <option key={option.key} value={option.key}>{option.label}</option>
               ))}
             </select>
           </label>
         </div>
-      </div>
-
-      <div className="project-filter-bar" aria-label="项目机会标签筛选">
-        {signalFilters.map((filter) => {
-          const count = projects.filter((project) => filter.matches(project)).length;
-          const isActive = activeSignal === filter.key;
-
-          return (
-            <button
-              key={filter.key}
-              type="button"
-              className={isActive ? "project-filter project-filter-active" : "project-filter"}
-              aria-pressed={isActive}
-              onClick={() => setActiveSignal(filter.key)}
-            >
-              <span>{filter.label}</span>
-              <strong>{count}</strong>
-            </button>
-          );
-        })}
       </div>
 
       <div className="project-result-head">
@@ -224,9 +225,12 @@ export function ProjectFilters({ projects }: ProjectFiltersProps) {
           type="button"
           className="reset-filters"
           onClick={() => {
-            setActiveSignal("all");
             setActiveCategory("all");
-            setActiveMonetization("all");
+            setBeginner("all");
+            setCode("all");
+            setCost("all");
+            setTraffic("all");
+            setMonetization("all");
             setActiveSort("radar");
             setQuery("");
           }}
@@ -238,7 +242,19 @@ export function ProjectFilters({ projects }: ProjectFiltersProps) {
       {visibleProjects.length > 0 ? (
         <div className="project-grid">
           {visibleProjects.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
+            <ProjectCard
+              key={project.slug}
+              project={project}
+              compareSelected={compareSlugs.includes(project.slug)}
+              onToggleCompare={(selectedProject) => {
+                setCompareSlugs((current) => {
+                  if (current.includes(selectedProject.slug)) {
+                    return current.filter((slug) => slug !== selectedProject.slug);
+                  }
+                  return current.length >= 3 ? [...current.slice(1), selectedProject.slug] : [...current, selectedProject.slug];
+                });
+              }}
+            />
           ))}
         </div>
       ) : (
@@ -247,6 +263,37 @@ export function ProjectFilters({ projects }: ProjectFiltersProps) {
           <p>可以放宽类别、变现方式或关键词，先从“全部”视图重新筛选。</p>
         </div>
       )}
+
+      {compareSlugs.length > 0 ? (
+        <aside className="compare-tray premium-card" aria-label="项目对比">
+          <div className="compare-tray-head">
+            <div>
+              <span><GitCompareArrows size={16} aria-hidden="true" /> 项目对比</span>
+              <p>最多保留 3 个项目，继续加入时会替换最早一项。</p>
+            </div>
+            <button type="button" aria-label="清空项目对比" onClick={() => setCompareSlugs([])}>
+              <X size={17} aria-hidden="true" />
+            </button>
+          </div>
+          <div className="compare-table">
+            {compareSlugs.map((slug) => {
+              const project = projects.find((item) => item.slug === slug);
+              if (!project) return null;
+              const profile = getProjectDecisionProfile(project);
+              return (
+                <article key={slug}>
+                  <strong>{project.name}</strong>
+                  <span>商业化 {project.commercialPotential.toFixed(1)}</span>
+                  <span>竞争 {project.competitionIndex.toFixed(1)}</span>
+                  <span>小白友好 {project.beginnerFriendly.toFixed(1)}</span>
+                  <span>{codeRequirementLabels[profile.codeRequirement]} · {startupCostLabels[profile.startupCost]}</span>
+                  <Link href={`/projects/${slug}`}>查看拆解</Link>
+                </article>
+              );
+            })}
+          </div>
+        </aside>
+      ) : null}
     </section>
   );
 }

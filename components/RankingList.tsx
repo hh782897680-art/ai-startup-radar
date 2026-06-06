@@ -1,19 +1,24 @@
 import Link from "next/link";
-import type { ProjectOpportunity } from "@/data/projects";
+import type { EnrichedProjectOpportunity } from "@/lib/projects";
 
 type RankingListProps = {
   title: string;
   description: string;
-  items: ProjectOpportunity[];
+  audience?: string;
+  items: EnrichedProjectOpportunity[];
   scoreLabel: string;
-  scoreOf: (project: ProjectOpportunity) => number;
+  scoreOf: (project: EnrichedProjectOpportunity) => number;
 };
 
-export function RankingList({ title, description, items, scoreLabel, scoreOf }: RankingListProps) {
+export function RankingList({ title, description, audience, items, scoreLabel, scoreOf }: RankingListProps) {
   return (
     <article className="ranking-card premium-card">
-      <h3>{title}</h3>
-      <p>{description}</p>
+      <div className="ranking-card-head">
+        <p className="section-kicker">机会榜单</p>
+        <h3>{title}</h3>
+        <p>{description}</p>
+        {audience ? <small><strong>适合谁看：</strong>{audience}</small> : null}
+      </div>
       <ol>
         {items.map((project, index) => (
           <li key={project.slug}>

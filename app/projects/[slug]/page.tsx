@@ -3,10 +3,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
+import { FaqAccordion, type FaqItem } from "@/components/FaqAccordion";
+import { FaqSchema } from "@/components/FaqSchema";
 import { SubscribeCta } from "@/components/SubscribeCta";
 import { Tag } from "@/components/Tag";
 import { buildPageMetadata, truncateDescription } from "@/lib/seo";
 import { getAllProjects, getProjectBySlug, getProjectOverallScore } from "@/lib/projects";
+import { codeRequirementLabels, getProjectDecisionProfile, startupCostLabels } from "@/lib/project-profile";
 
 type ProjectDetailPageProps = {
   params: Promise<{
@@ -63,6 +66,18 @@ function getBeginnerVerdict(project: NonNullable<ReturnType<typeof getProjectByS
   };
 }
 
+function getSevenDayPlan(project: NonNullable<ReturnType<typeof getProjectBySlug>>) {
+  return [
+    `第 1 天：明确一个目标人群，优先从“${project.targetUsers[0]}”开始。`,
+    `第 2 天：围绕“${project.painPoint}”完成 3-5 次真实访谈。`,
+    `第 3 天：对比 ${project.competitors.slice(0, 2).join("、")}，记录用户当前替代方案。`,
+    `第 4 天：制作最小方案：${project.mvpSuggestion}`,
+    `第 5 天：通过“${project.trafficChannels[0]}”投放演示、案例或服务说明。`,
+    "第 6 天：记录访问、回复、预约、试用或报价反馈，不用点赞数代替需求信号。",
+    "第 7 天：复盘是否有人愿意继续沟通、提供资料或付费，再决定继续、调整或停止。",
+  ];
+}
+
 export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
@@ -73,9 +88,26 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
   const score = getProjectOverallScore(project);
   const beginnerVerdict = getBeginnerVerdict(project);
+  const profile = getProjectDecisionProfile(project);
+  const sevenDayPlan = getSevenDayPlan(project);
+  const projectFaqs: FaqItem[] = [
+    {
+      question: `${project.name} 适合新手吗？`,
+      answer: beginnerVerdict.conclusion,
+    },
+    {
+      question: `${project.name} 需要多少代码能力？`,
+      answer: `本站将其归为“${codeRequirementLabels[profile.codeRequirement]}”。建议先按最小方案验证，不要在需求未确认前开发完整系统。`,
+    },
+    {
+      question: `${project.name} 可以怎么变现？`,
+      answer: `可能路径包括：${project.monetizationIdeas.join("、")}。这些只是可测试方向，不代表收益承诺。`,
+    },
+  ];
 
   return (
     <Container className="page">
+      <FaqSchema items={projectFaqs} />
       <article className="brief-hero">
         <Tag variant="signal">项目拆解</Tag>
         <h1>{project.name}</h1>
@@ -88,6 +120,8 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           <span className="meta-pill">小白友好 {project.beginnerFriendly}</span>
           <span className="meta-pill">SEO潜力 {project.seoPotential}</span>
           <span className="meta-pill">中文市场 {project.chineseMarketOpportunity}</span>
+          <span className="meta-pill">{codeRequirementLabels[profile.codeRequirement]}</span>
+          <span className="meta-pill">{startupCostLabels[profile.startupCost]}</span>
         </div>
         <small className="score-note">评分说明：站内参考评分，仅供参考。</small>
 
@@ -125,6 +159,19 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
       <div className="brief-layout">
         <div className="brief-main">
           <section className="opportunity-section">
+            <p className="detail-index">01 / 项目说明</p>
+            <h2>项目一句话说明</h2>
+            <p>{project.summary}</p>
+          </section>
+
+          <section className="opportunity-section">
+            <p className="detail-index">02 / 真实需求</p>
+            <h2>解决的真实痛点</h2>
+            <p>{project.painPoint}</p>
+          </section>
+
+          <section className="opportunity-section">
+            <p className="detail-index">03 / 人群判断</p>
             <h2>适合人群</h2>
             <ul className="check-list">
               {project.targetUsers.map((item) => (
@@ -134,8 +181,13 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           </section>
 
           <section className="opportunity-section">
-            <h2>核心痛点</h2>
-            <p>{project.painPoint}</p>
+            <p className="detail-index">04 / 排除条件</p>
+            <h2>不适合人群</h2>
+            <ul className="check-list risk-list">
+              {profile.notFor.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
           </section>
 
           <section className="opportunity-section">
@@ -144,36 +196,48 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           </section>
 
           <section className="opportunity-section">
-            <h2>可行流量渠道</h2>
-            <ul className="check-list">
-              {project.trafficChannels.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
+            <p className="detail-index">05 / 最小版本</p>
+            <h2>MVP 怎么做</h2>
+            <p>{project.mvpSuggestion}</p>
           </section>
 
           <section className="opportunity-section">
-            <h2>SEO关键词</h2>
-            <p>这些关键词适合用于项目落地页、教程文章、案例页和对比页。</p>
-            <div className="keyword-row keyword-row-large">
-              {project.seoKeywords.map((keyword) => (
-                <span key={keyword}>{keyword}</span>
+            <p className="detail-index">06 / 验证</p>
+            <h2>7 天验证计划</h2>
+            <ol className="day-plan">
+              {sevenDayPlan.map((item) => (
+                <li key={item}>{item}</li>
               ))}
+            </ol>
+            <div className="original-validation">
+              <strong>原项目验证重点</strong>
+              <ul className="check-list">
+                {project.validationSteps.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="original-validation">
+              <strong>验证记录模板</strong>
+              <ol className="ordered-list">
+                {project.validationTemplate.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ol>
+              <Link href="/templates/ai-project-validation-template" className="inline-link">
+                打开完整 7 天验证模板
+              </Link>
             </div>
           </section>
 
           <section className="opportunity-section">
-            <h2>竞品与替代方案</h2>
-            <p>不要只看直接竞品，也要看用户现在用来绕开问题的人工方案。</p>
+            <p className="detail-index">07 / 商业化</p>
+            <h2>变现路径（可能路径）</h2>
             <ul className="check-list">
-              {project.competitors.map((item) => (
+              {project.monetizationIdeas.map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
-          </section>
-
-          <section className="opportunity-section">
-            <h2>建议报价区间</h2>
             <div className="pricing-grid">
               <article>
                 <span>入门产品</span>
@@ -192,43 +256,40 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           </section>
 
           <section className="opportunity-section">
-            <h2>可尝试变现路径</h2>
+            <p className="detail-index">08 / 获客</p>
+            <h2>获客渠道</h2>
             <ul className="check-list">
-              {project.monetizationIdeas.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-            <p className="snapshot-disclaimer">不承诺收益，本页面仅提供可验证的商业化思路。</p>
-          </section>
-
-          <section className="opportunity-section">
-            <h2>MVP建议</h2>
-            <p>{project.mvpSuggestion}</p>
-          </section>
-
-          <section className="opportunity-section">
-            <h2>7天验证步骤</h2>
-            <ul className="check-list">
-              {project.validationSteps.map((item) => (
+              {project.trafficChannels.map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
           </section>
 
           <section className="opportunity-section">
-            <h2>验证模板</h2>
-            <ol className="ordered-list">
-              {project.validationTemplate.map((item) => (
-                <li key={item}>{item}</li>
+            <p className="detail-index">09 / 搜索需求</p>
+            <h2>SEO关键词</h2>
+            <p>这些关键词适合用于项目落地页、教程文章、案例页和对比页。</p>
+            <div className="keyword-row keyword-row-large">
+              {project.seoKeywords.map((keyword) => (
+                <span key={keyword}>{keyword}</span>
               ))}
-            </ol>
-            <Link href="/templates/ai-project-validation-template" className="inline-link">
-              打开完整 7 天验证模板
-            </Link>
+            </div>
           </section>
 
           <section className="opportunity-section">
-            <h2>主要风险</h2>
+            <p className="detail-index">10 / 市场参考</p>
+            <h2>竞品参考</h2>
+            <p>不要只看直接竞品，也要看用户现在用来绕开问题的人工方案。</p>
+            <ul className="check-list">
+              {project.competitors.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="opportunity-section">
+            <p className="detail-index">11 / 风险</p>
+            <h2>风险和避坑</h2>
             <ul className="check-list">
               {project.risks.map((item) => (
                 <li key={item}>{item}</li>
@@ -237,7 +298,13 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           </section>
 
           <section className="opportunity-section">
-            <h2>建议行动计划</h2>
+            <p className="detail-index">12 / 立即开始</p>
+            <h2>第一行动建议</h2>
+            <p className="first-action">{project.actionPlan[0]}。完成后再进入下一步，不要同时扩展多个方向。</p>
+          </section>
+
+          <section className="opportunity-section">
+            <h2>后续行动计划</h2>
             <ol className="ordered-list">
               {project.actionPlan.map((item) => (
                 <li key={item}>{item}</li>
@@ -281,6 +348,14 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           </Link>
         </aside>
       </div>
+
+      <section className="faq-section">
+        <div className="section-head">
+          <p className="section-kicker">项目 FAQ</p>
+          <h2 className="section-title">关于 {project.name} 的常见问题</h2>
+        </div>
+        <FaqAccordion items={projectFaqs} />
+      </section>
 
       <SubscribeCta
         title={`领取 ${project.name} 验证模板`}

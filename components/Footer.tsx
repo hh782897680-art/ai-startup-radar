@@ -5,6 +5,7 @@ const links = {
   product: [
     { href: "/projects", label: "AI项目库" },
     { href: "/rankings", label: "项目排行榜" },
+    { href: "/match", label: "AI项目匹配测试" },
     { href: "/blog", label: "关键词文章" },
     { href: "/guides", label: "新手指南" },
     { href: "/avoid", label: "不建议新手做的项目" },
