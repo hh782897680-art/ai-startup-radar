@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/projects",
     "/rankings",
     "/match",
+    "/matcher",
     "/learn",
     "/glossary",
     "/tutorials",

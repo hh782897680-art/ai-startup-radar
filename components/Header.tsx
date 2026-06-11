@@ -12,13 +12,14 @@ const primaryNavLinks = [
   { href: "/", label: "首页" },
   { href: "/projects", label: "AI项目库" },
   { href: "/rankings", label: "项目排行榜" },
-  { href: "/match", label: "匹配测试" },
+  { href: "/matcher", label: "机会匹配器" },
   { href: "/learn", label: "学习地图" },
   { href: "/glossary", label: "术语库" },
   { href: "/tutorials", label: "实战教程" },
 ];
 
 const secondaryNavLinks = [
+  { href: "/match", label: "项目库匹配测试" },
   { href: "/blog", label: "关键词文章" },
   { href: "/guides", label: "新手指南" },
   { href: "/avoid", label: "避坑清单" },
@@ -87,8 +88,8 @@ export function Header() {
         </div>
 
         <div className="header-right">
-          <Button href="/match" size="sm" className="desktop-cta">
-            测一测
+          <Button href="/matcher" size="sm" className="desktop-cta">
+            测机会
           </Button>
 
           <button
@@ -116,8 +117,8 @@ export function Header() {
               {link.label}
             </Link>
           ))}
-          <Button href="/match" onClick={() => setMobileOpen(false)} className="mobile-nav-cta">
-            测一测适合我的项目
+          <Button href="/matcher" onClick={() => setMobileOpen(false)} className="mobile-nav-cta">
+            测测我适合哪个 AI 项目
           </Button>
         </Container>
       </div>

@@ -5,6 +5,7 @@ import { Button } from "@/components/Button";
 import { FaqAccordion, type FaqItem } from "@/components/FaqAccordion";
 import { FaqSchema } from "@/components/FaqSchema";
 import { LearningMapPromo } from "@/components/LearningMapPromo";
+import { MatcherPromo } from "@/components/MatcherPromo";
 import { ProjectCard } from "@/components/ProjectCard";
 import { RankingList } from "@/components/RankingList";
 import { SubscribeCta } from "@/components/SubscribeCta";
@@ -110,8 +111,8 @@ export default function HomePage() {
             <Button href="/rankings" variant="secondary">
               查看排行榜
             </Button>
-            <Button href="/match" variant="ghost">
-              <Sparkles size={16} aria-hidden="true" /> 测一测适合我的项目
+            <Button href="/matcher" variant="ghost">
+              <Sparkles size={16} aria-hidden="true" /> 测测我适合哪个 AI 项目
             </Button>
           </div>
           <small className="hero-disclaimer">站内评分用于相对比较，不是收益预测；所有商业化建议仅为可能路径。</small>
@@ -211,6 +212,8 @@ export default function HomePage() {
       </section>
 
       <TodayRadar items={todayRadar} />
+
+      <MatcherPromo />
 
       <LearningMapPromo />
 
