@@ -5,6 +5,7 @@ import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
 import { FaqAccordion, type FaqItem } from "@/components/FaqAccordion";
 import { FaqSchema } from "@/components/FaqSchema";
+import { RelatedLearning } from "@/components/RelatedLearning";
 import { SubscribeCta } from "@/components/SubscribeCta";
 import { Tag } from "@/components/Tag";
 import { buildPageMetadata, truncateDescription } from "@/lib/seo";
@@ -348,6 +349,8 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           </Link>
         </aside>
       </div>
+
+      <RelatedLearning project={project} />
 
       <section className="faq-section">
         <div className="section-head">

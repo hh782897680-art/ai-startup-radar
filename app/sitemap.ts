@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { glossaryDetails, tutorialDetails } from "@/data/learning";
 import { getAllArticles } from "@/lib/articles";
 import { getAllProjects } from "@/lib/projects";
 import { absoluteUrl } from "@/lib/seo";
@@ -11,6 +12,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/projects",
     "/rankings",
     "/match",
+    "/learn",
+    "/glossary",
+    "/tutorials",
     "/blog",
     "/guides",
     "/avoid",
@@ -39,5 +43,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.65,
   }));
 
-  return [...staticRoutes, ...projectRoutes, ...articleRoutes];
+  const glossaryRoutes = glossaryDetails.map((item) => ({
+    url: absoluteUrl(`/glossary/${item.slug}`),
+    lastModified,
+    changeFrequency: "monthly" as const,
+    priority: 0.75,
+  }));
+
+  const tutorialRoutes = tutorialDetails.map((item) => ({
+    url: absoluteUrl(`/tutorials/${item.slug}`),
+    lastModified,
+    changeFrequency: "monthly" as const,
+    priority: 0.75,
+  }));
+
+  return [...staticRoutes, ...projectRoutes, ...articleRoutes, ...glossaryRoutes, ...tutorialRoutes];
 }

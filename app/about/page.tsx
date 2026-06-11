@@ -40,9 +40,18 @@ export default function AboutPage() {
           <h2>建议使用方式</h2>
           <ul>
             <li>先看排行榜，缩小方向。</li>
+            <li>通过学习地图和术语库补齐当前项目需要的能力。</li>
             <li>再看项目拆解，明确验证路径。</li>
             <li>按 7 天验证流程做最小实验。</li>
           </ul>
+        </section>
+
+        <section>
+          <h2>开源资源参考</h2>
+          <p>
+            开源资源参考遵循其原始许可证，本站仅做中文化学习路径整理与实战化改写，
+            不直接复制原仓库 README 或将资源列表包装成本站原创。
+          </p>
         </section>
       </article>
     </Container>

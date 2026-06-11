@@ -6,6 +6,9 @@ const links = {
     { href: "/projects", label: "AI项目库" },
     { href: "/rankings", label: "项目排行榜" },
     { href: "/match", label: "AI项目匹配测试" },
+    { href: "/learn", label: "AI实战学习地图" },
+    { href: "/glossary", label: "AI术语库" },
+    { href: "/tutorials", label: "AI实战教程" },
     { href: "/blog", label: "关键词文章" },
     { href: "/guides", label: "新手指南" },
     { href: "/avoid", label: "不建议新手做的项目" },
@@ -25,7 +28,7 @@ export function Footer() {
         <div className="footer-grid">
           <section className="footer-intro">
             <p className="footer-brand">AI创业雷达</p>
-            <p>发现、评分、拆解适合普通人的 AI 项目机会，帮助你先判断机会再动手做产品。</p>
+            <p>发现 AI 机会，学会 AI 技能，验证 AI 项目。帮助普通人先判断方向，再补能力、做最小实验。</p>
             <p className="footer-note">不承诺收益，只提供可验证的项目研究与行动框架。</p>
           </section>
 

@@ -6,8 +6,8 @@ export const siteConfig = {
   name: "AI创业雷达",
   url: SITE_URL,
   description:
-    "AI创业雷达：发现、评分、拆解适合普通人的 AI 项目机会，提供项目库、排行榜与 7 天验证路径。",
-  defaultTitle: "AI创业雷达 | 发现、评分、拆解 AI 项目机会",
+    "AI创业雷达：发现、评分、拆解适合普通人的 AI 项目机会，并提供生成式 AI 学习地图、术语库、实战教程与 7 天验证路径。",
+  defaultTitle: "AI创业雷达 | 发现 AI 机会，学习 AI 技能，验证 AI 项目",
 };
 
 export function absoluteUrl(path = "/"): string {

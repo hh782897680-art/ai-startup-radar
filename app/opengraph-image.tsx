@@ -51,8 +51,8 @@ export default function OpenGraphImage() {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "16px", maxWidth: "840px" }}>
-          <div style={{ fontSize: "68px", lineHeight: 1.05, letterSpacing: "-0.03em" }}>发现、评分、拆解 AI 项目机会</div>
-          <div style={{ fontSize: "30px", color: "#c8dbf8" }}>适合普通人的 AI 创业方向研究站</div>
+          <div style={{ fontSize: "68px", lineHeight: 1.05, letterSpacing: "-0.03em" }}>发现 AI 机会，学会 AI 技能</div>
+          <div style={{ fontSize: "30px", color: "#c8dbf8" }}>从项目雷达、学习地图到 7 天验证路径</div>
         </div>
       </div>
     ),

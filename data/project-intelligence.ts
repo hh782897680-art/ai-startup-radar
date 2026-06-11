@@ -10,11 +10,17 @@ export type ProjectIntelligence = {
   competitors: string[];
   pricing: PricingBand;
   validationTemplate: string[];
+  relatedConcepts?: string[];
+  relatedTutorials?: string[];
+  learningLevel?: "小白入门" | "进阶实战" | "需要技术基础";
 };
 
 export const projectIntelligence: ProjectIntelligence[] = [
   {
     slug: "open-webui",
+    relatedConcepts: ["ollama", "rag", "agent"],
+    relatedTutorials: ["local-llm-with-ollama", "rag-knowledge-base"],
+    learningLevel: "进阶实战",
     seoKeywords: ["Open WebUI 本地部署", "企业私有化 AI 知识库", "本地大模型聊天界面", "Open WebUI 中文教程"],
     competitors: ["AnythingLLM", "Dify Chatflow", "LibreChat", "企业自研聊天门户"],
     pricing: {
@@ -31,6 +37,9 @@ export const projectIntelligence: ProjectIntelligence[] = [
   },
   {
     slug: "dify",
+    relatedConcepts: ["agent", "prompt-engineering"],
+    relatedTutorials: [],
+    learningLevel: "进阶实战",
     seoKeywords: ["Dify 工作流模板", "Dify AI 客服", "Dify 企业自动化", "Dify 私有化部署"],
     competitors: ["Coze", "Flowise", "Langflow", "企业低代码自动化平台"],
     pricing: {
@@ -47,6 +56,9 @@ export const projectIntelligence: ProjectIntelligence[] = [
   },
   {
     slug: "ragflow",
+    relatedConcepts: ["rag", "embedding"],
+    relatedTutorials: ["rag-knowledge-base"],
+    learningLevel: "需要技术基础",
     seoKeywords: ["RAGFlow 知识库问答", "企业 RAG 文档解析", "PDF 知识库问答", "RAG 准确率优化"],
     competitors: ["Dify Knowledge", "LlamaIndex", "LangChain RAG", "传统企业搜索系统"],
     pricing: {
@@ -63,6 +75,9 @@ export const projectIntelligence: ProjectIntelligence[] = [
   },
   {
     slug: "comfyui",
+    relatedConcepts: ["prompt-engineering"],
+    relatedTutorials: [],
+    learningLevel: "需要技术基础",
     seoKeywords: ["ComfyUI 工作流", "AI 电商主图生成", "ComfyUI 电商素材", "AI 图片批量生成流程"],
     competitors: ["Midjourney", "Stable Diffusion WebUI", "Canva AI", "电商设计外包团队"],
     pricing: {
@@ -79,6 +94,9 @@ export const projectIntelligence: ProjectIntelligence[] = [
   },
   {
     slug: "flowise",
+    relatedConcepts: ["agent", "prompt-engineering"],
+    relatedTutorials: [],
+    learningLevel: "进阶实战",
     seoKeywords: ["Flowise 实战", "低代码 LLM 工作流", "AI 销售线索助手", "Flowise 企业部署"],
     competitors: ["Dify", "Langflow", "Zapier AI", "Make 自动化流程"],
     pricing: {
@@ -95,6 +113,9 @@ export const projectIntelligence: ProjectIntelligence[] = [
   },
   {
     slug: "anythingllm",
+    relatedConcepts: ["rag", "embedding", "ollama"],
+    relatedTutorials: ["rag-knowledge-base", "local-llm-with-ollama"],
+    learningLevel: "小白入门",
     seoKeywords: ["AnythingLLM 本地知识库", "本地文档问答工具", "中小企业知识库 AI", "私有知识库搭建"],
     competitors: ["Open WebUI", "Dify Knowledge", "Notion AI", "企业网盘搜索"],
     pricing: {

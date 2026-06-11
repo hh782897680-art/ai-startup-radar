@@ -4,6 +4,7 @@ import { Container } from "@/components/Container";
 import { Button } from "@/components/Button";
 import { FaqAccordion, type FaqItem } from "@/components/FaqAccordion";
 import { FaqSchema } from "@/components/FaqSchema";
+import { LearningMapPromo } from "@/components/LearningMapPromo";
 import { ProjectCard } from "@/components/ProjectCard";
 import { RankingList } from "@/components/RankingList";
 import { SubscribeCta } from "@/components/SubscribeCta";
@@ -27,9 +28,9 @@ import {
 import { buildPageMetadata } from "@/lib/seo";
 
 export const metadata = buildPageMetadata({
-  title: "AI创业雷达 | 发现、评分、拆解 AI 项目机会",
+  title: "AI创业雷达 | 发现 AI 机会，学习 AI 技能，验证 AI 项目",
   description:
-    "AI创业雷达：发现、评分、拆解适合普通人的 AI 项目机会。包含项目库、排行榜、7天验证流程与新手避坑建议。",
+    "AI创业雷达：发现、评分、拆解适合普通人的 AI 项目机会，并提供生成式 AI 学习地图、术语库、实战教程与 7 天验证路径。",
   path: "/",
   keywords: [
     "AI创业雷达",
@@ -88,13 +89,15 @@ export default function HomePage() {
         <div className="hero-mvp-left">
           <p className="hero-status"><span /> AI 创业机会决策系统</p>
           <h1>
-            找到下一个
+            发现 AI 机会
             <br />
-            值得你动手的 <span>AI 项目</span>
+            学会 AI 技能
+            <br />
+            验证 <span>AI 项目</span>
           </h1>
           <p>
-            从 AI 工具、开源项目和海外小生意中，筛选适合普通人的机会。用可对比的评分、资源门槛和 7 天验证路径，
-            帮你更快判断“这个方向是否值得先试”。
+            从 AI 工具、开源项目和海外小生意中筛选机会，用可对比的评分判断方向；
+            再通过学习地图补齐核心能力，用 7 天验证路径决定“这个项目是否值得先试”。
           </p>
           <ul className="hero-proof">
             <li><Compass size={15} aria-hidden="true" /> {allProjects.length} 个已拆解项目</li>
@@ -208,6 +211,8 @@ export default function HomePage() {
       </section>
 
       <TodayRadar items={todayRadar} />
+
+      <LearningMapPromo />
 
       <section>
         <div className="section-head">
