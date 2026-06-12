@@ -43,6 +43,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="zh-CN" className={geist.variable}>
+      <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5827463097117050"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body>
         <div className="site-shell">
           <Header />
